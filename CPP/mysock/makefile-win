@@ -1,0 +1,13 @@
+//windows下使用命令行编译出dll,还需要百度，vs环境可以直接设置。
+.SUFFIXES: .c .o
+CC=gcc
+SRCS=mysock.c
+    
+OBJS=$(SRCS:.c=.o)
+EXEC=libmysock.so
+.c.o:
+	$(CC) -Wall -DWIN -g -fPIC -o $@ -c $< 
+all: $(OBJS)
+	$(CC) -shared -o $(EXEC) $(OBJS)
+clean:
+	rm -rf $(OBJS) $(EXEC)

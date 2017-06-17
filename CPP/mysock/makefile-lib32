@@ -1,0 +1,12 @@
+.SUFFIXES: .c .o
+CC=gcc
+SRCS=mysock.c
+    
+OBJS=$(SRCS:.c=.o)
+EXEC=libmysock32.so
+.c.o:
+	$(CC) -Wall -D__UNIX -g -m32 -fPIC -o $@ -c $< 
+all: $(OBJS)
+	$(CC)  -m32 -shared -o $(EXEC) $(OBJS)
+clean:
+	rm -rf $(OBJS) $(EXEC)
