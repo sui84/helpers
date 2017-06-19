@@ -5,7 +5,7 @@ using System.Text;
 using System.Data;
 using System.IO;
 
-namespace ConvertHelper
+namespace ConvertPcap
 {
     public class ConvertHelper
     {
@@ -16,26 +16,26 @@ namespace ConvertHelper
             public string[] GetIpPackageHead()
             {
                 return new string[] { "FilePath","LineNumber", "Encapsulation type", "Arrival Time","Time shift for this packet", "Epoch Time","Time delta from previous captured frame","Time delta from previous displayed frame","Time since reference or first frame"
-                            , "Frame Number", "Frame Length", "Capture Length", "Frame is marked","Frame is ignored","Protocols in frame","Ethernet","Type","Sender MAC address","Sender IP address","Target MAC address","Target IP address","MS Network Load Balancing"
+                            , "Frame Number", "Frame Length", "Capture Length", "Frame is marked","Frame is ignored","Protocols in frame"
+                            ,"Ethernet","Type","Sender MAC address","Sender IP address","Target MAC address","Target IP address","MS Network Load Balancing"
                             , "Version", "Header Length", "Differentiated Services Field", "Differentiated Services Codepoint", "Explicit Congestion Notification", "Total Length", "Identification"
-                            , "Flags" , "Reserved bit", "Don't fragment", "More fragments" , "Fragment offset", "Time to live", "Protocol", "Header checksum" ,"Header checksum status", "Source", "Source Host", "Destination" , "Destination Host", "Source GeoIP", "Destination GeoIP" 
-                            , "Source Port", "Destination Port", "Stream index" , "TCP Segment Len", "Sequence number", "Next sequence number","Acknowledgment number","Header Length2"
+                            , "Flags" , "Reserved bit", "Don't fragment", "More fragments" , "Fragment offset", "Time to live", "Protocol", "Header checksum" ,"Header checksum status", "Source"
+                          , "Source Host", "Destination" , "Destination Host", "Source GeoIP", "Destination GeoIP" 
+                           , "Source Port", "Destination Port", "Stream index" , "TCP Segment Len", "Sequence number", "Next sequence number","Acknowledgment number","Header Length2"
                             , "Flags2", "Reserved", "Nonce", "Congestion Window Reduced (CWR)" , "ECN-Echo", "Urgent", "Acknowledgment" , "Push", "Reset", "Syn", "Fin", "TCP Flags"
-                            , "Window size value", "Checksum","Urgent pointer","Options","SEQ/ACK analysis","ACKFrame","Timestamps","Tabular Data Stream","Hypertext Transfer Protocol","BinaryData","BinaryDataStr"};
+                           , "Window size value", "Checksum","Urgent pointer","Options"
+                           ,"SEQ/ACK analysis","ACKFrame","Timestamps","Tabular Data Stream","Hypertext Transfer Protocol","BinaryData","BinaryDataStr"
+                };
+            }
+            public string[] GetOptionsFlag()
+            {
+                return new string[] { "FilePath", "LineNumber", "Ethernet", "Type", "Sender MAC address", "Sender IP address", "Target MAC address", "Target IP address", "MS Network Load Balancing","Source Host",  "Destination Host" };
             }
             public string[] GetOtherPackageHead()
             {
-                return new string[] { "FilePath","LineNumber", "Encapsulation type", "Arrival Time","Time shift for this packet", "Epoch Time","Time delta from previous captured frame","Time delta from previous displayed frame","Time since reference or first frame"
-                            , "Frame Number", "Frame Length", "Capture Length", "Frame is marked","Frame is ignored","Protocols in frame","Ethernet","Type","Sender MAC address","Sender IP address","Target MAC address","Target IP address","MS Network Load Balancing"
-                            , "Version", "Header Length", "Differentiated Services Field", "Differentiated Services Codepoint", "Explicit Congestion Notification", "Total Length", "Identification"
-                            , "Flags" , "Reserved bit", "Don't fragment", "More fragments" , "Fragment offset", "Time to live", "Protocol", "Header checksum" ,"Header checksum status", "Source", "Source Host", "Destination" , "Destination Host", "Source GeoIP", "Destination GeoIP" 
-                            , "Source Port", "Destination Port", "Stream index" , "TCP Segment Len", "Sequence number", "Next sequence number","Acknowledgment number","Header Length2"
-                            , "Flags2", "Reserved", "Nonce", "Congestion Window Reduced (CWR)" , "ECN-Echo", "Urgent", "Acknowledgment" , "Push", "Reset", "Syn", "Fin", "TCP Flags"
-                            , "Window size value", "Checksum","Urgent pointer","Options","SEQ/ACK analysis","ACKFrame","Timestamps","Tabular Data Stream","Hypertext Transfer Protocol","BinaryData","BinaryDataStr"};
+                return new string[] { "FilePath", "FrameNumber", "Type", "ColumnsOrMethod", "Url", "Header", "RowCntOrRequest", "Direction", "Cookie", "Data" };
             }
               
-
-            public  string[] OTHERPKGHEAD = new string[] { "FrameNumber", "Type", "ColumnsOrMethod", "Url", "Header", "RowCntOrRequest", "Direction", "Cookie", "Data" };
         // 将DataTable中数据写入到CSV文件中
             public  void SaveCSV(DataTable dt, string fullPath)
             {
@@ -107,6 +107,7 @@ namespace ConvertHelper
                 string[] tableHead = GetIpPackageHead();
                 AddColumns(dt, tableHead);
                 dt.Columns["FilePath"].DefaultValue = filePath;
+                string[] options = GetOptionsFlag();
 
                 //标示列数
                 int columnCount = tableHead.Length;
@@ -131,7 +132,7 @@ namespace ConvertHelper
                         }
                         if (strLine.StartsWith("Frame") && colIndex > 0)
                         {
-                            dr = AddRecord(dr, endDataStr, dt, tdsdt);
+                            dr = AddRecord(filePath,dr, endDataStr, dt, tdsdt);
                             colIndex = 0;
                             endData = false;
                             endDataStr = string.Empty;
@@ -143,31 +144,43 @@ namespace ConvertHelper
                         }
                         else
                         {
-
                             string line = RemoveChar(strLine);
-                            string colName = tableHead[colIndex];
-                            int strPos = line.IndexOf(string.Format(colName.TrimEnd('2'), sepChar));
-                            if (strPos > -1)
+
+                            while(colIndex < tableHead.Count()) // (int i = colIndex; i < tableHead.Count(); i++)
                             {
-                                if (tableHead[colIndex] == "Ethernet")
+                                string colName = tableHead[colIndex];
+                                int strPos = line.IndexOf(string.Format(colName.TrimEnd('2'), sepChar));
+                                if (strPos > -1)
                                 {
-                                    dr[colIndex] = line;
+                                    if (tableHead[colIndex] == "Ethernet")
+                                    {
+                                        dr[colIndex] = line;
+                                    }
+                                    else if (tableHead[colIndex] == "MS Network Load Balancing")
+                                    {
+                                        endData = true;
+                                    }
+                                    else if (tableHead[colIndex] == "Urgent pointer")
+                                    {
+                                        dr[colIndex] = line.Substring(line.IndexOf(sepChar) + 1).Trim();
+                                        endData = true;
+                                    }
+                                    else
+                                    {
+                                        dr[colIndex] = line.Substring(line.IndexOf(sepChar) + 1).Trim();
+                                        colIndex += 1;
+                                    }
+                                    break;
                                 }
-                                else if (tableHead[colIndex] == "MS Network Load Balancing")
+                                else if (options.Contains(colName))
                                 {
-                                    endData = true;
-                                }
-                                else if (tableHead[colIndex] == "Urgent pointer" )
-                                {
-                                    dr[colIndex] = line.Substring(line.IndexOf(sepChar) + 1).Trim();
-                                    endData = true;
-                                }
-                                else
-                                {
-                                    dr[colIndex] = line.Substring(line.IndexOf(sepChar) + 1).Trim();
                                     colIndex += 1;
                                 }
+                                else
+                                    break;
                             }
+
+                            
                         }
                     }
                     catch (Exception ex)
@@ -177,7 +190,7 @@ namespace ConvertHelper
                 }
                 if (colIndex > 0)
                 {
-                    AddRecord(dr, endDataStr, dt, tdsdt);
+                    AddRecord(filePath,dr, endDataStr, dt, tdsdt);
                     colIndex = 0;
                     endData = false;
                 }
@@ -193,7 +206,7 @@ namespace ConvertHelper
                 return ds;
             }
 
-            private DataRow AddRecord(DataRow dr, string endDataStr,DataTable dt, DataTable tdsdt)
+            private DataRow AddRecord(string filePath,DataRow dr, string endDataStr,DataTable dt, DataTable tdsdt)
             {
                 if (!string.IsNullOrWhiteSpace(endDataStr))
                 {
@@ -213,14 +226,14 @@ namespace ConvertHelper
                     dr["Tabular Data Stream"] = valueStrs[3];
                     if (!string.IsNullOrEmpty(valueStrs[3]))
                     {
-                        tdsdt.Merge(ConvertOtherPkg(Convert.ToInt32(dr["Frame Number"]), valueStrs[3], TDS));
+                        tdsdt.Merge(ConvertOtherPkg(filePath,Convert.ToInt32(dr["Frame Number"]), valueStrs[3], TDS));
                     }
                     dr["Hypertext Transfer Protocol"] = valueStrs[4];
                     if (!string.IsNullOrEmpty(valueStrs[4]))
                     {
-                        tdsdt.Merge(ConvertOtherPkg(Convert.ToInt32(dr["Frame Number"]), valueStrs[4], HTTP));
+                        tdsdt.Merge(ConvertOtherPkg(filePath,Convert.ToInt32(dr["Frame Number"]), valueStrs[4], HTTP));
                     }
-                    dr["MSNetworkLoadBalancing"] = valueStrs[6];
+                    dr["MS Network Load Balancing"] = valueStrs[6];
                     dr["BinaryData"] = valueStrs[6];
                     string[] binStrs = valueStrs[6].Split(new string[]{"\r\n"},StringSplitOptions.None );
                     string binaryDataStr = string.Empty;
@@ -283,7 +296,7 @@ namespace ConvertHelper
                 if(pos > -1) s = s.Substring(pos + 1).Trim();
                 return s;
             }
-            private DataTable ConvertOtherPkg(int frameNum,string pkgStr,string type)
+            private DataTable ConvertOtherPkg(string filePath,int frameNum,string pkgStr,string type)
             {
                 DataTable dt = new DataTable();
                 DataRow dr = dt.NewRow();
@@ -292,6 +305,7 @@ namespace ConvertHelper
                 AddColumns(dt, tableHead);
                 dr["FrameNumber"] = frameNum;
                 dr["Type"] = type;
+                dt.Columns["FilePath"].DefaultValue = filePath;
                 string dataStr = string.Empty;
                 string headerStr = string.Empty;
                 List<string> header = new List<string>();
@@ -363,6 +377,7 @@ namespace ConvertHelper
                 // dr["Data"] = string.Format("\"{0}\"", csvdata);
                 dr["Header"] = string.Join ("", header);
                 dr["Data"] = dataStr;
+                dr["FilePath"] = filePath;
                 dt.Rows.Add(dr);
                 return dt;
             }
