@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D1FEC3AA-A58B-4E14-AC50-5008E97D1BBC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>Test</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <RootNamespace>Test</RootNamespace>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="nunit.framework, Version=2.4.7.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=a5715cc6d5c3540b">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\PacketDotNet\Libraries\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="SharpPcap, Version=3.6.0.0, Culture=neutral, PublicKeyToken=null">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\SharpPcap\SharpPcap.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="PacketType\Ieee80211PerPacketInformationTest.cs" />
+    <Compile Include="PacketType\Ieee80211RadioPacketTest.cs" />
+    <Compile Include="PacketType\Ieee80211RawPacketTest.cs" />
+    <Compile Include="Rate.cs" />
+    <Compile Include="ByteSetupMethods.cs" />
+    <Compile Include="NUnitSetupClass.cs" />
+    <Compile Include="LoggingConfiguration.cs" />
+    <Compile Include="Performance\BitConversionPerformance.cs" />
+    <Compile Include="Performance\ByteCopyPerformance.cs" />
+    <Compile Include="Performance\ByteRetrievalPerformancs.cs" />
+    <Compile Include="Misc\ConstructingPackets.cs" />
+    <Compile Include="Misc\ChecksumUtilsTest.cs" />
+    <Compile Include="Misc\PacketTest.cs" />
+    <Compile Include="Misc\StringOutput.cs" />
+    <Compile Include="PacketType\ArpPacketTest.cs" />
+    <Compile Include="PacketType\EthernetPacketTest.cs" />
+    <Compile Include="PacketType\ICMPv4PacketTest.cs" />
+    <Compile Include="PacketType\ICMPv6PacketTest.cs" />
+    <Compile Include="PacketType\IpPacketTest.cs" />
+    <Compile Include="PacketType\IPv4PacketTest.cs" />
+    <Compile Include="PacketType\IPv6PacketTest.cs" />
+    <Compile Include="PacketType\LinuxCookedCaptureTest.cs" />
+    <Compile Include="PacketType\PPPoEPPPTest.cs" />
+    <Compile Include="PacketType\TcpPacketTest.cs" />
+    <Compile Include="PacketType\UdpTest.cs" />
+    <Compile Include="PacketType\LldpTest.cs" />
+    <Compile Include="PacketType\WakeOnLanTest.cs" />
+    <Compile Include="PacketType\IGMPv2PacketTest.cs" />
+    <Compile Include="PacketType\PPPPacketTest.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\PacketDotNet\PacketDotNet.csproj">
+      <Project>{55ABBA4C-AAF9-4726-A592-0C92436CEC92}</Project>
+      <Name>PacketDotNet</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="log4net.config" />
+  </ItemGroup>
+  <ItemGroup />
+</Project>

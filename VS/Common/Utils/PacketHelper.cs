@@ -44,7 +44,7 @@ namespace Common.Utils
             // Start capture 'INFINTE' number of packets
             // This method will return when EOF reached.
             device.Capture();
-            pstr.SaveChanges();
+            //pstr.SaveChanges();
 
             // Close the pcap device
             device.Close();
@@ -84,7 +84,7 @@ namespace Common.Utils
                 }
                 p.CreatedDate = DateTime.Now;
                 pstr.Packets.AddObject(p);
-               // pstr.SaveChanges();
+                pstr.SaveChanges();
 
                 Console.WriteLine("{0} At: {1}:{2}: MAC:{3} -> MAC:{4}",
                                   packetIndex,

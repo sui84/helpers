@@ -150,9 +150,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libraries\Microsoft.SqlServer\Microsoft.SqlServer.Smo.dll</HintPath>
     </Reference>
-    <Reference Include="PacketDotNet">
-      <HintPath>..\Libraries\PacketDotNet.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -193,6 +190,7 @@
     <Compile Include="Utils\CacheHelper.cs" />
     <Compile Include="Utils\HttpHeaderHelper.cs" />
     <Compile Include="Utils\PacketHelper.cs" />
+    <Compile Include="Utils\SocketHelper.cs" />
     <Compile Include="Utils\ValueTypeHelper.cs" />
     <Compile Include="Utils\ConnStrHelper.cs" />
     <Compile Include="Utils\CookieHelper.cs" />
@@ -222,21 +220,27 @@
     <Compile Include="Utils\XmlHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SharpPcap\SharpPcap.csproj">
-      <Project>{24262E52-1304-4A25-8F73-A3B06E40592E}</Project>
-      <Name>SharpPcap</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="SQL\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
     <EntityDeploy Include="Data\PacketDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>PacketDB.Designer.cs</LastGenOutput>
     </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PacketDotNet-0.11.0.src\PacketDotNet\PacketDotNet.csproj">
+      <Project>{55ABBA4C-AAF9-4726-A592-0C92436CEC92}</Project>
+      <Name>PacketDotNet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharpPcap\SharpPcap.csproj">
+      <Project>{24262E52-1304-4A25-8F73-A3B06E40592E}</Project>
+      <Name>SharpPcap</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>

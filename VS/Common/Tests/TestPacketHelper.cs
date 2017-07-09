@@ -11,7 +11,7 @@ namespace Common.Tests
         static void Main(string[] args)
         {
             PacketHelper phelper = new PacketHelper();
-            phelper.GetPackageFromFile(@"d:\temp\test.cap");
+            phelper.GetPackageFromFile(@"d:\temp\tools.cap");
         }
     }
 }
