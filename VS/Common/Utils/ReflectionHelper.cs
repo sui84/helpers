@@ -8,6 +8,7 @@ using System.Text;
 
 namespace Common.Utils
 {
+
     public class ReflectionHelper {
         public static void CopyObject(object target, object source, params string[] excludedProperties) {
             if (source == null || target == null)
@@ -55,6 +56,55 @@ namespace Common.Utils
                         targetProperty.SetValue(target, p.GetValue(source, null) == null ? null : (int?)Convert.ToInt32(p.GetValue(source, null).ToString()), null);
                     }
 
+                }
+            }
+        }
+
+        public static void CopyObjectAnyNamespace(object target, object source)
+        {
+            if (source == null || target == null)
+            {
+                throw new ArgumentNullException("source/target object");
+            }
+            PropertyInfo[] props = target.GetType().GetProperties();
+            foreach (PropertyInfo p in props)
+            {
+                try{
+                    if (p.CanWrite)
+                    {
+                        PropertyInfo sourceProperty = source.GetType().GetProperty(p.Name);
+                        if (sourceProperty != null && (p.PropertyType == sourceProperty.PropertyType 
+                            || (p.PropertyType.Name == "DateTime" && typeof(Nullable<DateTime>) == sourceProperty.PropertyType)
+                            || (sourceProperty.PropertyType.Name == "DateTime" && typeof(Nullable<DateTime>) == p.PropertyType) 
+                            || (p.PropertyType.Name == "Boolean" && typeof(Nullable<Boolean>) == sourceProperty.PropertyType)
+                            || (sourceProperty.PropertyType.Name == "Boolean" && typeof(Nullable<Boolean>) == p.PropertyType)
+                            ) && sourceProperty.CanRead
+                                && !AreEqual(p.GetValue(target, null), sourceProperty.GetValue(source, null)))
+                        {
+                            p.SetValue(target, sourceProperty.GetValue(source, null), null);
+                        }
+                        else if (sourceProperty != null && sourceProperty.GetValue(source, null) != null && (p.PropertyType != sourceProperty.PropertyType) && (p.PropertyType.Name == "String" ))
+                        {
+                            p.SetValue(target, sourceProperty.GetValue(source, null) == null ? null : sourceProperty.GetValue(source, null).ToString(), null);
+                        }
+                        else if (sourceProperty != null && sourceProperty.GetValue(source, null) != null && (p.PropertyType != sourceProperty.PropertyType) && (p.PropertyType.Name=="Int16" || typeof(Nullable<Int16>) == p.PropertyType ))
+                        {
+                            p.SetValue(target, sourceProperty.GetValue(source, null) == null ? null :(int?)Convert.ToInt16(sourceProperty.GetValue(source, null)), null);
+                        }
+                        else if (sourceProperty != null && sourceProperty.GetValue(source, null) != null && (p.PropertyType != sourceProperty.PropertyType) && (p.PropertyType.Name == "Int32" || typeof(Nullable<Int32>) == p.PropertyType ))
+                        {
+                            p.SetValue(target, sourceProperty.GetValue(source, null) == null ? null : (int?)Convert.ToInt32(sourceProperty.GetValue(source, null)), null);
+                        }
+                        else if (sourceProperty != null && sourceProperty.GetValue(source, null) != null && (p.PropertyType != sourceProperty.PropertyType) && (p.PropertyType.Name == "Int64"  || typeof(Nullable<Int64>) == p.PropertyType))
+                        {
+                            p.SetValue(target, sourceProperty.GetValue(source, null) == null ? null : (Int64?)Convert.ToInt64(sourceProperty.GetValue(source, null)), null);
+                        }
+
+                    }
+                }
+                catch (Exception ex){
+                    LogHelper loghelper = new LogHelper();
+                    loghelper.LogInfo(string.Format("Type:{0}\r\n{1}\r\n{2}", target.GetType().Name,ex.Message, ex.StackTrace), @"D:\TEMP\Log.txt");
                 }
             }
         }

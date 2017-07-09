@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="packetModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="packetConnStr" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="EthernetPackets" EntityType="packetModel.EthernetPacket" />
+    <EntitySet Name="IPPackets" EntityType="packetModel.IPPacket" />
+    <EntitySet Name="Packets" EntityType="packetModel.Packet" />
+    <EntitySet Name="TcpPackets" EntityType="packetModel.TcpPacket" />
+    <EntitySet Name="UdpPackets" EntityType="packetModel.UdpPacket" />
+    <AssociationSet Name="FK_EthernetPackets_Packets" Association="packetModel.FK_EthernetPackets_Packets">
+      <End Role="Packets" EntitySet="Packets" />
+      <End Role="EthernetPackets" EntitySet="EthernetPackets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IPPackets_Packets" Association="packetModel.FK_IPPackets_Packets">
+      <End Role="Packets" EntitySet="Packets" />
+      <End Role="IPPackets" EntitySet="IPPackets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TcpPackets_Packets" Association="packetModel.FK_TcpPackets_Packets">
+      <End Role="Packets" EntitySet="Packets" />
+      <End Role="TcpPackets" EntitySet="TcpPackets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UdpPackets_Packets" Association="packetModel.FK_UdpPackets_Packets">
+      <End Role="Packets" EntitySet="Packets" />
+      <End Role="UdpPackets" EntitySet="UdpPackets" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="EthernetPacket">
+    <Key>
+      <PropertyRef Name="PacketId" />
+    </Key>
+    <Property Name="PacketId" Type="Int64" Nullable="false" />
+    <Property Name="DestinationHwAddress" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="SourceHwAddress" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Packet" Relationship="packetModel.FK_EthernetPackets_Packets" FromRole="EthernetPackets" ToRole="Packets" />
+  </EntityType>
+  <EntityType Name="IPPacket">
+    <Key>
+      <PropertyRef Name="PacketId" />
+    </Key>
+    <Property Name="PacketId" Type="Int64" Nullable="false" />
+    <Property Name="TimeToLive" Type="Int32" />
+    <Property Name="SourceAddress" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="DestinationAddress" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="HeaderLength" Type="Int32" />
+    <Property Name="HopLimit" Type="Int32" />
+    <Property Name="NextHeader" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="PayLoadLengh" Type="Int32" />
+    <Property Name="Protocol" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="TotalLength" Type="Int32" />
+    <Property Name="Version" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="Checksum" Type="Int32" />
+    <Property Name="ValidChecksum" Type="Boolean" />
+    <Property Name="Color" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="DifferentiatedServices" Type="Int32" />
+    <Property Name="FragmentFlags" Type="Int32" />
+    <Property Name="FragmentOffset" Type="Int32" />
+    <Property Name="Id" Type="Int32" />
+    <NavigationProperty Name="Packet" Relationship="packetModel.FK_IPPackets_Packets" FromRole="IPPackets" ToRole="Packets" />
+  </EntityType>
+  <EntityType Name="Packet">
+    <Key>
+      <PropertyRef Name="PacketId" />
+    </Key>
+    <Property Name="PacketId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FilePath" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+    <Property Name="FrameNumber" Type="Int32" />
+    <Property Name="Data" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Bytes" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="BytesLength" Type="Int32" />
+    <Property Name="BytesOffset" Type="Int32" />
+    <Property Name="NeedsCopy" Type="Boolean" />
+    <Property Name="Color" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Header" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="HeaderLength" Type="Int32" />
+    <Property Name="Bytes2" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="BytesLength2" Type="Int32" />
+    <Property Name="BytesOffset2" Type="Int32" />
+    <Property Name="NeedsCopy2" Type="Boolean" />
+    <Property Name="Color2" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Header2" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="HeaderLength2" Type="Int32" />
+    <Property Name="Bytes3" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="BytesLength3" Type="Int32" />
+    <Property Name="BytesOffset3" Type="Int32" />
+    <Property Name="NeedsCopy3" Type="Boolean" />
+    <Property Name="Color3" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Header3" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="HeaderLength3" Type="Int32" />
+    <Property Name="Bytes4" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="BytesLength4" Type="Int32" />
+    <Property Name="BytesOffset4" Type="Int32" />
+    <Property Name="NeedsCopy4" Type="Boolean" />
+    <Property Name="Color4" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Header4" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="HeaderLength4" Type="Int32" />
+    <Property Name="Bytes5" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="BytesLength5" Type="Int32" />
+    <Property Name="BytesOffset5" Type="Int32" />
+    <Property Name="NeedsCopy5" Type="Boolean" />
+    <Property Name="Color5" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Header5" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="HeaderLength5" Type="Int32" />
+    <NavigationProperty Name="EthernetPacket" Relationship="packetModel.FK_EthernetPackets_Packets" FromRole="Packets" ToRole="EthernetPackets" />
+    <NavigationProperty Name="IPPacket" Relationship="packetModel.FK_IPPackets_Packets" FromRole="Packets" ToRole="IPPackets" />
+    <NavigationProperty Name="TcpPacket" Relationship="packetModel.FK_TcpPackets_Packets" FromRole="Packets" ToRole="TcpPackets" />
+    <NavigationProperty Name="UdpPacket" Relationship="packetModel.FK_UdpPackets_Packets" FromRole="Packets" ToRole="UdpPackets" />
+  </EntityType>
+  <EntityType Name="TcpPacket">
+    <Key>
+      <PropertyRef Name="PacketId" />
+    </Key>
+    <Property Name="PacketId" Type="Int64" Nullable="false" />
+    <Property Name="SourcePort" Type="Int32" />
+    <Property Name="DestinationPort" Type="Int32" />
+    <Property Name="SequenceNumber" Type="Int32" />
+    <Property Name="AcknowledgmentNumber" Type="Int32" />
+    <Property Name="DataOffset" Type="Int32" />
+    <Property Name="WindowSize" Type="Int32" />
+    <Property Name="Checksum" Type="Int32" />
+    <Property Name="ValidChecksum" Type="Int32" />
+    <Property Name="ValidTCPChecksum" Type="Int32" />
+    <Property Name="AllFlags" Type="Int32" />
+    <Property Name="Urg" Type="Boolean" />
+    <Property Name="Ack" Type="Boolean" />
+    <Property Name="Psh" Type="Boolean" />
+    <Property Name="Rst" Type="Boolean" />
+    <Property Name="Syn" Type="Boolean" />
+    <Property Name="Fin" Type="Boolean" />
+    <Property Name="ECN" Type="Boolean" />
+    <Property Name="CWR" Type="Boolean" />
+    <Property Name="Color" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="UrgentPointer" Type="Int32" />
+    <Property Name="Options" Type="Int32" />
+    <NavigationProperty Name="Packet" Relationship="packetModel.FK_TcpPackets_Packets" FromRole="TcpPackets" ToRole="Packets" />
+  </EntityType>
+  <EntityType Name="UdpPacket">
+    <Key>
+      <PropertyRef Name="PacketId" />
+    </Key>
+    <Property Name="PacketId" Type="Int64" Nullable="false" />
+    <Property Name="SourcePort" Type="Int32" />
+    <Property Name="DestinationPort" Type="Int32" />
+    <Property Name="Length" Type="Int32" />
+    <Property Name="Checksum" Type="Int32" />
+    <Property Name="ValidChecksum" Type="Boolean" />
+    <Property Name="ValidUDPChecksum" Type="Boolean" />
+    <Property Name="Color" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Packet" Relationship="packetModel.FK_UdpPackets_Packets" FromRole="UdpPackets" ToRole="Packets" />
+  </EntityType>
+  <Association Name="FK_EthernetPackets_Packets">
+    <End Role="Packets" Type="packetModel.Packet" Multiplicity="1" />
+    <End Role="EthernetPackets" Type="packetModel.EthernetPacket" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Packets">
+        <PropertyRef Name="PacketId" />
+      </Principal>
+      <Dependent Role="EthernetPackets">
+        <PropertyRef Name="PacketId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IPPackets_Packets">
+    <End Role="Packets" Type="packetModel.Packet" Multiplicity="1" />
+    <End Role="IPPackets" Type="packetModel.IPPacket" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Packets">
+        <PropertyRef Name="PacketId" />
+      </Principal>
+      <Dependent Role="IPPackets">
+        <PropertyRef Name="PacketId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TcpPackets_Packets">
+    <End Role="Packets" Type="packetModel.Packet" Multiplicity="1" />
+    <End Role="TcpPackets" Type="packetModel.TcpPacket" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Packets">
+        <PropertyRef Name="PacketId" />
+      </Principal>
+      <Dependent Role="TcpPackets">
+        <PropertyRef Name="PacketId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UdpPackets_Packets">
+    <End Role="Packets" Type="packetModel.Packet" Multiplicity="1" />
+    <End Role="UdpPackets" Type="packetModel.UdpPacket" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Packets">
+        <PropertyRef Name="PacketId" />
+      </Principal>
+      <Dependent Role="UdpPackets">
+        <PropertyRef Name="PacketId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

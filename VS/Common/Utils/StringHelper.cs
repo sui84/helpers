@@ -26,7 +26,7 @@ namespace Common.Utils
         }
 
         // Byte[] => String
-        static string ConvertBytesToString(byte[] bytes)
+        public static string ConvertBytesToString(byte[] bytes)
         {
             using (var stream = new MemoryStream(bytes))
             {
@@ -35,6 +35,23 @@ namespace Common.Utils
                     return streamReader.ReadToEnd();
                 }
             }
+        }
+
+        // Byte[] => UTF8 String
+        public static string ConvertBytesToUTF8String(byte[] bytes,params int[] skiptake)
+        {
+            if (skiptake.Length > 1 && skiptake[0] < bytes.Length && skiptake[0] + skiptake[1] < bytes.Length)
+                return System.Text.UTF8Encoding.UTF8.GetString(bytes.Skip(skiptake[0]).Take(skiptake[1]).ToArray());
+            else if (skiptake.Length == 1 && skiptake[0] < bytes.Length)
+                return System.Text.UTF8Encoding.UTF8.GetString(bytes.Skip(skiptake[0]).ToArray());
+            else
+                return System.Text.UTF8Encoding.UTF8.GetString(bytes);
+        }
+
+        // Byte[] => GB2312 String
+        public static string ConvertBytesToGB2312String(byte[] bytes)
+        {
+            return System.Text.Encoding.GetEncoding("GB2312").GetString(bytes);
         }
 
         // String => Byte[]  

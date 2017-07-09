@@ -1,0 +1,440 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="packetModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="packetModelStoreContainer">
+    <EntitySet Name="ARPPacket" EntityType="packetModel.Store.ARPPacket" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="EthernetPacket" EntityType="packetModel.Store.EthernetPacket" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="HttpPacket" EntityType="packetModel.Store.HttpPacket" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ICMPPacket" EntityType="packetModel.Store.ICMPPacket" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Ieee80211RadioPacket" EntityType="packetModel.Store.Ieee80211RadioPacket" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="IGMPPacket" EntityType="packetModel.Store.IGMPPacket" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="IPPacket" EntityType="packetModel.Store.IPPacket" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="LinuxSLLType" EntityType="packetModel.Store.LinuxSLLType" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Packet" EntityType="packetModel.Store.Packet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PPPoEPacket" EntityType="packetModel.Store.PPPoEPacket" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PPPPacket" EntityType="packetModel.Store.PPPPacket" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TcpPacket" EntityType="packetModel.Store.TcpPacket" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UdpPacket" EntityType="packetModel.Store.UdpPacket" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_ARPPacket_Packet" Association="packetModel.Store.FK_ARPPacket_Packet">
+      <End Role="Packet" EntitySet="Packet" />
+      <End Role="ARPPacket" EntitySet="ARPPacket" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EthernetPackets_Packets" Association="packetModel.Store.FK_EthernetPackets_Packets">
+      <End Role="Packet" EntitySet="Packet" />
+      <End Role="EthernetPacket" EntitySet="EthernetPacket" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HttpPacket_Packet" Association="packetModel.Store.FK_HttpPacket_Packet">
+      <End Role="Packet" EntitySet="Packet" />
+      <End Role="HttpPacket" EntitySet="HttpPacket" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ICMPPacket_Packet" Association="packetModel.Store.FK_ICMPPacket_Packet">
+      <End Role="Packet" EntitySet="Packet" />
+      <End Role="ICMPPacket" EntitySet="ICMPPacket" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ieee80211RadioPacket_Packet" Association="packetModel.Store.FK_Ieee80211RadioPacket_Packet">
+      <End Role="Packet" EntitySet="Packet" />
+      <End Role="Ieee80211RadioPacket" EntitySet="Ieee80211RadioPacket" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IGMPPacket_Packet" Association="packetModel.Store.FK_IGMPPacket_Packet">
+      <End Role="Packet" EntitySet="Packet" />
+      <End Role="IGMPPacket" EntitySet="IGMPPacket" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IPPackets_Packets" Association="packetModel.Store.FK_IPPackets_Packets">
+      <End Role="Packet" EntitySet="Packet" />
+      <End Role="IPPacket" EntitySet="IPPacket" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LinuxSLLType_Packet" Association="packetModel.Store.FK_LinuxSLLType_Packet">
+      <End Role="Packet" EntitySet="Packet" />
+      <End Role="LinuxSLLType" EntitySet="LinuxSLLType" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PPPoEPacket_Packet" Association="packetModel.Store.FK_PPPoEPacket_Packet">
+      <End Role="Packet" EntitySet="Packet" />
+      <End Role="PPPoEPacket" EntitySet="PPPoEPacket" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PPPPacket_Packet" Association="packetModel.Store.FK_PPPPacket_Packet">
+      <End Role="Packet" EntitySet="Packet" />
+      <End Role="PPPPacket" EntitySet="PPPPacket" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TcpPackets_Packets" Association="packetModel.Store.FK_TcpPackets_Packets">
+      <End Role="Packet" EntitySet="Packet" />
+      <End Role="TcpPacket" EntitySet="TcpPacket" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UdpPackets_Packets" Association="packetModel.Store.FK_UdpPackets_Packets">
+      <End Role="Packet" EntitySet="Packet" />
+      <End Role="UdpPacket" EntitySet="UdpPacket" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="ARPPacket">
+    <Key>
+      <PropertyRef Name="PacketId" />
+    </Key>
+    <Property Name="PacketId" Type="bigint" Nullable="false" />
+    <Property Name="HardwareAddressType" Type="nvarchar" MaxLength="50" />
+    <Property Name="ProtocolAddressType" Type="nvarchar" MaxLength="50" />
+    <Property Name="HardwareAddressLength" Type="int" />
+    <Property Name="ProtocolAddressLength" Type="int" />
+    <Property Name="Operation" Type="nvarchar" MaxLength="50" />
+    <Property Name="SenderProtocolAddress" Type="nvarchar" MaxLength="50" />
+    <Property Name="TargetProtocolAddress" Type="nvarchar" MaxLength="50" />
+    <Property Name="SenderHardwareAddress" Type="nvarchar" MaxLength="50" />
+    <Property Name="TargetHardwareAddress" Type="nvarchar" MaxLength="50" />
+    <Property Name="Color" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="EthernetPacket">
+    <Key>
+      <PropertyRef Name="PacketId" />
+    </Key>
+    <Property Name="PacketId" Type="bigint" Nullable="false" />
+    <Property Name="DestinationHwAddress" Type="nvarchar" MaxLength="50" />
+    <Property Name="SourceHwAddress" Type="nvarchar" MaxLength="50" />
+    <Property Name="Type" Type="int" />
+  </EntityType>
+  <EntityType Name="HttpPacket">
+    <Key>
+      <PropertyRef Name="PacketId" />
+    </Key>
+    <Property Name="PacketId" Type="bigint" Nullable="false" />
+    <Property Name="Direction" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Method" Type="nvarchar" MaxLength="50" />
+    <Property Name="URL" Type="nvarchar" MaxLength="500" />
+    <Property Name="Version" Type="nvarchar" MaxLength="50" />
+    <Property Name="UserAgent" Type="nvarchar" MaxLength="2000" />
+    <Property Name="ProxyAuthorization" Type="nvarchar" MaxLength="50" />
+    <Property Name="AcceptLanguage" Type="nvarchar" MaxLength="50" />
+    <Property Name="Connection" Type="nvarchar" MaxLength="50" />
+    <Property Name="Host" Type="nvarchar" MaxLength="50" />
+    <Property Name="ContentEncoding" Type="nvarchar" MaxLength="50" />
+    <Property Name="ContentLength" Type="int" />
+    <Property Name="CacheControl" Type="nvarchar" MaxLength="50" />
+    <Property Name="Cookie" Type="nvarchar(max)" />
+    <Property Name="Status" Type="nvarchar" MaxLength="50" />
+    <Property Name="Server" Type="nvarchar" MaxLength="50" />
+    <Property Name="Date" Type="nvarchar" MaxLength="50" />
+    <Property Name="ContentType" Type="nvarchar" MaxLength="50" />
+    <Property Name="LastModified" Type="nvarchar" MaxLength="50" />
+    <Property Name="Body" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="ICMPPacket">
+    <Key>
+      <PropertyRef Name="PacketId" />
+    </Key>
+    <Property Name="PacketId" Type="bigint" Nullable="false" />
+    <Property Name="TypeCode" Type="int" />
+    <Property Name="Checksum" Type="int" />
+    <Property Name="ID" Type="int" />
+    <Property Name="Sequence" Type="int" />
+    <Property Name="Data" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Ieee80211RadioPacket">
+    <Key>
+      <PropertyRef Name="PacketId" />
+    </Key>
+    <Property Name="PacketId" Type="bigint" Nullable="false" />
+    <Property Name="Version" Type="int" />
+    <Property Name="Length" Type="int" />
+    <Property Name="Present" Type="int" />
+    <Property Name="RadioTapFields" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="IGMPPacket">
+    <Key>
+      <PropertyRef Name="PacketId" />
+    </Key>
+    <Property Name="PacketId" Type="bigint" Nullable="false" />
+    <Property Name="Type" Type="int" />
+    <Property Name="MaxResponseTime" Type="int" />
+    <Property Name="Checksum" Type="int" />
+    <Property Name="GroupAddress" Type="nvarchar" MaxLength="50" />
+    <Property Name="Color" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="IPPacket">
+    <Key>
+      <PropertyRef Name="PacketId" />
+    </Key>
+    <Property Name="PacketId" Type="bigint" Nullable="false" />
+    <Property Name="TimeToLive" Type="int" />
+    <Property Name="SourceAddress" Type="nvarchar" MaxLength="50" />
+    <Property Name="DestinationAddress" Type="nvarchar" MaxLength="50" />
+    <Property Name="HeaderLength" Type="int" />
+    <Property Name="HopLimit" Type="int" />
+    <Property Name="NextHeader" Type="nvarchar" MaxLength="50" />
+    <Property Name="PayLoadLengh" Type="int" />
+    <Property Name="Protocol" Type="nvarchar" MaxLength="50" />
+    <Property Name="TotalLength" Type="int" />
+    <Property Name="Version" Type="nvarchar" MaxLength="10" />
+    <Property Name="Checksum" Type="int" />
+    <Property Name="ValidChecksum" Type="bit" />
+    <Property Name="Color" Type="nvarchar" MaxLength="50" />
+    <Property Name="DifferentiatedServices" Type="int" />
+    <Property Name="FragmentFlags" Type="int" />
+    <Property Name="FragmentOffset" Type="int" />
+    <Property Name="Id" Type="int" />
+  </EntityType>
+  <EntityType Name="LinuxSLLType">
+    <Key>
+      <PropertyRef Name="PacketId" />
+    </Key>
+    <Property Name="PacketId" Type="bigint" Nullable="false" />
+    <Property Name="Type" Type="int" />
+    <Property Name="LinkLayerAddressType" Type="int" />
+    <Property Name="LinkLayerAddressLength" Type="int" />
+    <Property Name="LinkLayerAddress" Type="int" />
+    <Property Name="EthernetProtocolType" Type="int" />
+  </EntityType>
+  <EntityType Name="Packet">
+    <Key>
+      <PropertyRef Name="PacketId" />
+    </Key>
+    <Property Name="PacketId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="FilePath" Type="nvarchar" MaxLength="200" />
+    <Property Name="FrameNumber" Type="int" />
+    <Property Name="Timeval" Type="datetime" />
+    <Property Name="HeaderData" Type="nvarchar(max)" />
+    <Property Name="BodyData" Type="nvarchar(max)" />
+    <Property Name="BytesLength" Type="int" />
+    <Property Name="PacketType" Type="nvarchar" MaxLength="50" />
+    <Property Name="Bytes" Type="varbinary(max)" />
+    <Property Name="BytesOffset" Type="int" />
+    <Property Name="NeedsCopy" Type="bit" />
+    <Property Name="Color" Type="nvarchar" MaxLength="50" />
+    <Property Name="Header" Type="varbinary(max)" />
+    <Property Name="HeaderLength" Type="int" />
+    <Property Name="PacketType2" Type="nvarchar" MaxLength="50" />
+    <Property Name="Bytes2" Type="varbinary(max)" />
+    <Property Name="BytesOffset2" Type="int" />
+    <Property Name="NeedsCopy2" Type="bit" />
+    <Property Name="Color2" Type="nvarchar" MaxLength="50" />
+    <Property Name="Header2" Type="varbinary(max)" />
+    <Property Name="HeaderLength2" Type="int" />
+    <Property Name="PacketType3" Type="nvarchar" MaxLength="50" />
+    <Property Name="Bytes3" Type="varbinary(max)" />
+    <Property Name="BytesOffset3" Type="int" />
+    <Property Name="NeedsCopy3" Type="bit" />
+    <Property Name="Color3" Type="nvarchar" MaxLength="50" />
+    <Property Name="Header3" Type="varbinary(max)" />
+    <Property Name="HeaderLength3" Type="int" />
+    <Property Name="PacketType4" Type="nvarchar" MaxLength="50" />
+    <Property Name="Bytes4" Type="varbinary(max)" />
+    <Property Name="BytesOffset4" Type="int" />
+    <Property Name="NeedsCopy4" Type="bit" />
+    <Property Name="Color4" Type="nvarchar" MaxLength="50" />
+    <Property Name="Header4" Type="varbinary(max)" />
+    <Property Name="HeaderLength4" Type="int" />
+    <Property Name="PacketType5" Type="nvarchar" MaxLength="50" />
+    <Property Name="Bytes5" Type="varbinary(max)" />
+    <Property Name="BytesOffset5" Type="int" />
+    <Property Name="NeedsCopy5" Type="bit" />
+    <Property Name="Color5" Type="nvarchar" MaxLength="50" />
+    <Property Name="Header5" Type="varbinary(max)" />
+    <Property Name="HeaderLength5" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PPPoEPacket">
+    <Key>
+      <PropertyRef Name="PacketId" />
+    </Key>
+    <Property Name="PacketId" Type="bigint" Nullable="false" />
+    <Property Name="VersionType" Type="int" />
+    <Property Name="Version" Type="int" />
+    <Property Name="Type" Type="int" />
+    <Property Name="Code" Type="int" />
+    <Property Name="SessionId" Type="int" />
+    <Property Name="Length" Type="int" />
+  </EntityType>
+  <EntityType Name="PPPPacket">
+    <Key>
+      <PropertyRef Name="PacketId" />
+    </Key>
+    <Property Name="PacketId" Type="bigint" Nullable="false" />
+    <Property Name="Protocol" Type="int" />
+    <Property Name="Color" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TcpPacket">
+    <Key>
+      <PropertyRef Name="PacketId" />
+    </Key>
+    <Property Name="PacketId" Type="bigint" Nullable="false" />
+    <Property Name="SourcePort" Type="int" />
+    <Property Name="DestinationPort" Type="int" />
+    <Property Name="SequenceNumber" Type="bigint" />
+    <Property Name="AcknowledgmentNumber" Type="bigint" />
+    <Property Name="DataOffset" Type="int" />
+    <Property Name="WindowSize" Type="int" />
+    <Property Name="Checksum" Type="int" />
+    <Property Name="ValidChecksum" Type="int" />
+    <Property Name="ValidTCPChecksum" Type="int" />
+    <Property Name="AllFlags" Type="int" />
+    <Property Name="Urg" Type="bit" />
+    <Property Name="Ack" Type="bit" />
+    <Property Name="Psh" Type="bit" />
+    <Property Name="Rst" Type="bit" />
+    <Property Name="Syn" Type="bit" />
+    <Property Name="Fin" Type="bit" />
+    <Property Name="ECN" Type="bit" />
+    <Property Name="CWR" Type="bit" />
+    <Property Name="Color" Type="nvarchar" MaxLength="50" />
+    <Property Name="UrgentPointer" Type="int" />
+    <Property Name="Options" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="UdpPacket">
+    <Key>
+      <PropertyRef Name="PacketId" />
+    </Key>
+    <Property Name="PacketId" Type="bigint" Nullable="false" />
+    <Property Name="SourcePort" Type="int" />
+    <Property Name="DestinationPort" Type="int" />
+    <Property Name="Length" Type="int" />
+    <Property Name="Checksum" Type="int" />
+    <Property Name="ValidChecksum" Type="bit" />
+    <Property Name="ValidUDPChecksum" Type="bit" />
+    <Property Name="Color" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_ARPPacket_Packet">
+    <End Role="Packet" Type="packetModel.Store.Packet" Multiplicity="1" />
+    <End Role="ARPPacket" Type="packetModel.Store.ARPPacket" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Packet">
+        <PropertyRef Name="PacketId" />
+      </Principal>
+      <Dependent Role="ARPPacket">
+        <PropertyRef Name="PacketId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EthernetPackets_Packets">
+    <End Role="Packet" Type="packetModel.Store.Packet" Multiplicity="1" />
+    <End Role="EthernetPacket" Type="packetModel.Store.EthernetPacket" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Packet">
+        <PropertyRef Name="PacketId" />
+      </Principal>
+      <Dependent Role="EthernetPacket">
+        <PropertyRef Name="PacketId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HttpPacket_Packet">
+    <End Role="Packet" Type="packetModel.Store.Packet" Multiplicity="1" />
+    <End Role="HttpPacket" Type="packetModel.Store.HttpPacket" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Packet">
+        <PropertyRef Name="PacketId" />
+      </Principal>
+      <Dependent Role="HttpPacket">
+        <PropertyRef Name="PacketId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ICMPPacket_Packet">
+    <End Role="Packet" Type="packetModel.Store.Packet" Multiplicity="1" />
+    <End Role="ICMPPacket" Type="packetModel.Store.ICMPPacket" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Packet">
+        <PropertyRef Name="PacketId" />
+      </Principal>
+      <Dependent Role="ICMPPacket">
+        <PropertyRef Name="PacketId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ieee80211RadioPacket_Packet">
+    <End Role="Packet" Type="packetModel.Store.Packet" Multiplicity="1" />
+    <End Role="Ieee80211RadioPacket" Type="packetModel.Store.Ieee80211RadioPacket" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Packet">
+        <PropertyRef Name="PacketId" />
+      </Principal>
+      <Dependent Role="Ieee80211RadioPacket">
+        <PropertyRef Name="PacketId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IGMPPacket_Packet">
+    <End Role="Packet" Type="packetModel.Store.Packet" Multiplicity="1" />
+    <End Role="IGMPPacket" Type="packetModel.Store.IGMPPacket" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Packet">
+        <PropertyRef Name="PacketId" />
+      </Principal>
+      <Dependent Role="IGMPPacket">
+        <PropertyRef Name="PacketId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IPPackets_Packets">
+    <End Role="Packet" Type="packetModel.Store.Packet" Multiplicity="1" />
+    <End Role="IPPacket" Type="packetModel.Store.IPPacket" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Packet">
+        <PropertyRef Name="PacketId" />
+      </Principal>
+      <Dependent Role="IPPacket">
+        <PropertyRef Name="PacketId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LinuxSLLType_Packet">
+    <End Role="Packet" Type="packetModel.Store.Packet" Multiplicity="1" />
+    <End Role="LinuxSLLType" Type="packetModel.Store.LinuxSLLType" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Packet">
+        <PropertyRef Name="PacketId" />
+      </Principal>
+      <Dependent Role="LinuxSLLType">
+        <PropertyRef Name="PacketId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PPPoEPacket_Packet">
+    <End Role="Packet" Type="packetModel.Store.Packet" Multiplicity="1" />
+    <End Role="PPPoEPacket" Type="packetModel.Store.PPPoEPacket" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Packet">
+        <PropertyRef Name="PacketId" />
+      </Principal>
+      <Dependent Role="PPPoEPacket">
+        <PropertyRef Name="PacketId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PPPPacket_Packet">
+    <End Role="Packet" Type="packetModel.Store.Packet" Multiplicity="1" />
+    <End Role="PPPPacket" Type="packetModel.Store.PPPPacket" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Packet">
+        <PropertyRef Name="PacketId" />
+      </Principal>
+      <Dependent Role="PPPPacket">
+        <PropertyRef Name="PacketId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TcpPackets_Packets">
+    <End Role="Packet" Type="packetModel.Store.Packet" Multiplicity="1" />
+    <End Role="TcpPacket" Type="packetModel.Store.TcpPacket" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Packet">
+        <PropertyRef Name="PacketId" />
+      </Principal>
+      <Dependent Role="TcpPacket">
+        <PropertyRef Name="PacketId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UdpPackets_Packets">
+    <End Role="Packet" Type="packetModel.Store.Packet" Multiplicity="1" />
+    <End Role="UdpPacket" Type="packetModel.Store.UdpPacket" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Packet">
+        <PropertyRef Name="PacketId" />
+      </Principal>
+      <Dependent Role="UdpPacket">
+        <PropertyRef Name="PacketId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <!--生成过程中发现错误:
+      警告 6013: 表/视图“packet.dbo.test”未定义主键，并且无法推断有效的主键。已排除了此表/视图。若要使用实体，将需要检查您的架构、添加正确的键并取消对实体的注释。
+      
+      <EntityType Name="test">
+        <Property Name="data" Type="nvarchar(max)" />
+      </EntityType>-->
+</Schema>

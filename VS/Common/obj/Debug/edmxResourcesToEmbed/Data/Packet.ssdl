@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="packetModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="packetModelStoreContainer">
+    <EntitySet Name="EthernetPackets" EntityType="packetModel.Store.EthernetPackets" store:Type="Tables" store:Schema="dbo" store:Name="EthernetPackets">
+      <DefiningQuery>SELECT 
+      [EthernetPackets].[PacketId] AS [PacketId], 
+      [EthernetPackets].[DestinationHwAddress] AS [DestinationHwAddress], 
+      [EthernetPackets].[SourceHwAddress] AS [SourceHwAddress]
+      FROM [dbo].[EthernetPackets] AS [EthernetPackets]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="IPPackets" EntityType="packetModel.Store.IPPackets" store:Type="Tables" store:Schema="dbo" store:Name="IPPackets">
+      <DefiningQuery>SELECT 
+      [IPPackets].[PacketId] AS [PacketId], 
+      [IPPackets].[TimeToLive] AS [TimeToLive], 
+      [IPPackets].[SourceAddress] AS [SourceAddress], 
+      [IPPackets].[DestinationAddress] AS [DestinationAddress], 
+      [IPPackets].[HeaderLength] AS [HeaderLength], 
+      [IPPackets].[HopLimit] AS [HopLimit], 
+      [IPPackets].[NextHeader] AS [NextHeader], 
+      [IPPackets].[PayLoadLengh] AS [PayLoadLengh], 
+      [IPPackets].[Protocol] AS [Protocol], 
+      [IPPackets].[TotalLength] AS [TotalLength], 
+      [IPPackets].[Version] AS [Version], 
+      [IPPackets].[Checksum] AS [Checksum], 
+      [IPPackets].[ValidChecksum] AS [ValidChecksum], 
+      [IPPackets].[Color] AS [Color], 
+      [IPPackets].[DifferentiatedServices] AS [DifferentiatedServices], 
+      [IPPackets].[FragmentFlags] AS [FragmentFlags], 
+      [IPPackets].[FragmentOffset] AS [FragmentOffset], 
+      [IPPackets].[Id] AS [Id]
+      FROM [dbo].[IPPackets] AS [IPPackets]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="Packets" EntityType="packetModel.Store.Packets" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TcpPackets" EntityType="packetModel.Store.TcpPackets" store:Type="Tables" store:Schema="dbo" store:Name="TcpPackets">
+      <DefiningQuery>SELECT 
+      [TcpPackets].[PacketId] AS [PacketId], 
+      [TcpPackets].[SourcePort] AS [SourcePort], 
+      [TcpPackets].[DestinationPort] AS [DestinationPort], 
+      [TcpPackets].[SequenceNumber] AS [SequenceNumber], 
+      [TcpPackets].[AcknowledgmentNumber] AS [AcknowledgmentNumber], 
+      [TcpPackets].[DataOffset] AS [DataOffset], 
+      [TcpPackets].[WindowSize] AS [WindowSize], 
+      [TcpPackets].[Checksum] AS [Checksum], 
+      [TcpPackets].[ValidChecksum] AS [ValidChecksum], 
+      [TcpPackets].[ValidTCPChecksum] AS [ValidTCPChecksum], 
+      [TcpPackets].[AllFlags] AS [AllFlags], 
+      [TcpPackets].[Urg] AS [Urg], 
+      [TcpPackets].[Ack] AS [Ack], 
+      [TcpPackets].[Psh] AS [Psh], 
+      [TcpPackets].[Rst] AS [Rst], 
+      [TcpPackets].[Syn] AS [Syn], 
+      [TcpPackets].[Fin] AS [Fin], 
+      [TcpPackets].[ECN] AS [ECN], 
+      [TcpPackets].[CWR] AS [CWR], 
+      [TcpPackets].[Color] AS [Color], 
+      [TcpPackets].[UrgentPointer] AS [UrgentPointer], 
+      [TcpPackets].[Options] AS [Options]
+      FROM [dbo].[TcpPackets] AS [TcpPackets]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="UdpPackets" EntityType="packetModel.Store.UdpPackets" store:Type="Tables" store:Schema="dbo" store:Name="UdpPackets">
+      <DefiningQuery>SELECT 
+      [UdpPackets].[PacketId] AS [PacketId], 
+      [UdpPackets].[SourcePort] AS [SourcePort], 
+      [UdpPackets].[DestinationPort] AS [DestinationPort], 
+      [UdpPackets].[Length] AS [Length], 
+      [UdpPackets].[Checksum] AS [Checksum], 
+      [UdpPackets].[ValidChecksum] AS [ValidChecksum], 
+      [UdpPackets].[ValidUDPChecksum] AS [ValidUDPChecksum], 
+      [UdpPackets].[Color] AS [Color]
+      FROM [dbo].[UdpPackets] AS [UdpPackets]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_EthernetPackets_Packets" Association="packetModel.Store.FK_EthernetPackets_Packets">
+      <End Role="Packets" EntitySet="Packets" />
+      <End Role="EthernetPackets" EntitySet="EthernetPackets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IPPackets_Packets" Association="packetModel.Store.FK_IPPackets_Packets">
+      <End Role="Packets" EntitySet="Packets" />
+      <End Role="IPPackets" EntitySet="IPPackets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TcpPackets_Packets" Association="packetModel.Store.FK_TcpPackets_Packets">
+      <End Role="Packets" EntitySet="Packets" />
+      <End Role="TcpPackets" EntitySet="TcpPackets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UdpPackets_Packets" Association="packetModel.Store.FK_UdpPackets_Packets">
+      <End Role="Packets" EntitySet="Packets" />
+      <End Role="UdpPackets" EntitySet="UdpPackets" />
+    </AssociationSet>
+  </EntityContainer>
+  <!--生成过程中发现错误:
+      警告 6002: 表/视图“packet.dbo.EthernetPackets”未定义主键。已推断出该键，并将定义创建为只读的表/视图。
+      -->
+  <EntityType Name="EthernetPackets">
+    <Key>
+      <PropertyRef Name="PacketId" />
+    </Key>
+    <Property Name="PacketId" Type="bigint" Nullable="false" />
+    <Property Name="DestinationHwAddress" Type="nvarchar" MaxLength="50" />
+    <Property Name="SourceHwAddress" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <!--生成过程中发现错误:
+      警告 6002: 表/视图“packet.dbo.IPPackets”未定义主键。已推断出该键，并将定义创建为只读的表/视图。
+      -->
+  <EntityType Name="IPPackets">
+    <Key>
+      <PropertyRef Name="PacketId" />
+    </Key>
+    <Property Name="PacketId" Type="bigint" Nullable="false" />
+    <Property Name="TimeToLive" Type="int" />
+    <Property Name="SourceAddress" Type="nvarchar" MaxLength="50" />
+    <Property Name="DestinationAddress" Type="nvarchar" MaxLength="50" />
+    <Property Name="HeaderLength" Type="int" />
+    <Property Name="HopLimit" Type="int" />
+    <Property Name="NextHeader" Type="nvarchar" MaxLength="50" />
+    <Property Name="PayLoadLengh" Type="int" />
+    <Property Name="Protocol" Type="nvarchar" MaxLength="50" />
+    <Property Name="TotalLength" Type="int" />
+    <Property Name="Version" Type="nvarchar" MaxLength="10" />
+    <Property Name="Checksum" Type="int" />
+    <Property Name="ValidChecksum" Type="bit" />
+    <Property Name="Color" Type="nvarchar" MaxLength="50" />
+    <Property Name="DifferentiatedServices" Type="int" />
+    <Property Name="FragmentFlags" Type="int" />
+    <Property Name="FragmentOffset" Type="int" />
+    <Property Name="Id" Type="int" />
+  </EntityType>
+  <EntityType Name="Packets">
+    <Key>
+      <PropertyRef Name="PacketId" />
+    </Key>
+    <Property Name="PacketId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="FilePath" Type="nvarchar" MaxLength="200" />
+    <Property Name="FrameNumber" Type="int" />
+    <Property Name="Data" Type="nvarchar(max)" />
+    <Property Name="Bytes" Type="varbinary(max)" />
+    <Property Name="BytesLength" Type="int" />
+    <Property Name="BytesOffset" Type="int" />
+    <Property Name="NeedsCopy" Type="bit" />
+    <Property Name="Color" Type="nvarchar" MaxLength="50" />
+    <Property Name="Header" Type="varbinary(max)" />
+    <Property Name="HeaderLength" Type="int" />
+    <Property Name="Bytes2" Type="varbinary(max)" />
+    <Property Name="BytesLength2" Type="int" />
+    <Property Name="BytesOffset2" Type="int" />
+    <Property Name="NeedsCopy2" Type="bit" />
+    <Property Name="Color2" Type="nvarchar" MaxLength="50" />
+    <Property Name="Header2" Type="varbinary(max)" />
+    <Property Name="HeaderLength2" Type="int" />
+    <Property Name="Bytes3" Type="varbinary(max)" />
+    <Property Name="BytesLength3" Type="int" />
+    <Property Name="BytesOffset3" Type="int" />
+    <Property Name="NeedsCopy3" Type="bit" />
+    <Property Name="Color3" Type="nvarchar" MaxLength="50" />
+    <Property Name="Header3" Type="varbinary(max)" />
+    <Property Name="HeaderLength3" Type="int" />
+    <Property Name="Bytes4" Type="varbinary(max)" />
+    <Property Name="BytesLength4" Type="int" />
+    <Property Name="BytesOffset4" Type="int" />
+    <Property Name="NeedsCopy4" Type="bit" />
+    <Property Name="Color4" Type="nvarchar" MaxLength="50" />
+    <Property Name="Header4" Type="varbinary(max)" />
+    <Property Name="HeaderLength4" Type="int" />
+    <Property Name="Bytes5" Type="varbinary(max)" />
+    <Property Name="BytesLength5" Type="int" />
+    <Property Name="BytesOffset5" Type="int" />
+    <Property Name="NeedsCopy5" Type="bit" />
+    <Property Name="Color5" Type="nvarchar" MaxLength="50" />
+    <Property Name="Header5" Type="varbinary(max)" />
+    <Property Name="HeaderLength5" Type="int" />
+  </EntityType>
+  <!--生成过程中发现错误:
+      警告 6002: 表/视图“packet.dbo.TcpPackets”未定义主键。已推断出该键，并将定义创建为只读的表/视图。
+      -->
+  <EntityType Name="TcpPackets">
+    <Key>
+      <PropertyRef Name="PacketId" />
+    </Key>
+    <Property Name="PacketId" Type="bigint" Nullable="false" />
+    <Property Name="SourcePort" Type="int" />
+    <Property Name="DestinationPort" Type="int" />
+    <Property Name="SequenceNumber" Type="int" />
+    <Property Name="AcknowledgmentNumber" Type="int" />
+    <Property Name="DataOffset" Type="int" />
+    <Property Name="WindowSize" Type="int" />
+    <Property Name="Checksum" Type="int" />
+    <Property Name="ValidChecksum" Type="int" />
+    <Property Name="ValidTCPChecksum" Type="int" />
+    <Property Name="AllFlags" Type="int" />
+    <Property Name="Urg" Type="bit" />
+    <Property Name="Ack" Type="bit" />
+    <Property Name="Psh" Type="bit" />
+    <Property Name="Rst" Type="bit" />
+    <Property Name="Syn" Type="bit" />
+    <Property Name="Fin" Type="bit" />
+    <Property Name="ECN" Type="bit" />
+    <Property Name="CWR" Type="bit" />
+    <Property Name="Color" Type="nvarchar" MaxLength="50" />
+    <Property Name="UrgentPointer" Type="int" />
+    <Property Name="Options" Type="int" />
+  </EntityType>
+  <!--生成过程中发现错误:
+      警告 6002: 表/视图“packet.dbo.UdpPackets”未定义主键。已推断出该键，并将定义创建为只读的表/视图。
+      -->
+  <EntityType Name="UdpPackets">
+    <Key>
+      <PropertyRef Name="PacketId" />
+    </Key>
+    <Property Name="PacketId" Type="bigint" Nullable="false" />
+    <Property Name="SourcePort" Type="int" />
+    <Property Name="DestinationPort" Type="int" />
+    <Property Name="Length" Type="int" />
+    <Property Name="Checksum" Type="int" />
+    <Property Name="ValidChecksum" Type="bit" />
+    <Property Name="ValidUDPChecksum" Type="bit" />
+    <Property Name="Color" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_EthernetPackets_Packets">
+    <End Role="Packets" Type="packetModel.Store.Packets" Multiplicity="1" />
+    <End Role="EthernetPackets" Type="packetModel.Store.EthernetPackets" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Packets">
+        <PropertyRef Name="PacketId" />
+      </Principal>
+      <Dependent Role="EthernetPackets">
+        <PropertyRef Name="PacketId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IPPackets_Packets">
+    <End Role="Packets" Type="packetModel.Store.Packets" Multiplicity="1" />
+    <End Role="IPPackets" Type="packetModel.Store.IPPackets" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Packets">
+        <PropertyRef Name="PacketId" />
+      </Principal>
+      <Dependent Role="IPPackets">
+        <PropertyRef Name="PacketId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TcpPackets_Packets">
+    <End Role="Packets" Type="packetModel.Store.Packets" Multiplicity="1" />
+    <End Role="TcpPackets" Type="packetModel.Store.TcpPackets" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Packets">
+        <PropertyRef Name="PacketId" />
+      </Principal>
+      <Dependent Role="TcpPackets">
+        <PropertyRef Name="PacketId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UdpPackets_Packets">
+    <End Role="Packets" Type="packetModel.Store.Packets" Multiplicity="1" />
+    <End Role="UdpPackets" Type="packetModel.Store.UdpPackets" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Packets">
+        <PropertyRef Name="PacketId" />
+      </Principal>
+      <Dependent Role="UdpPackets">
+        <PropertyRef Name="PacketId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

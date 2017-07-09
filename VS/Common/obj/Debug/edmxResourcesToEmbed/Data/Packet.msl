@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="packetModelStoreContainer" CdmEntityContainer="packetConnStr">
+    <EntitySetMapping Name="EthernetPackets">
+      <EntityTypeMapping TypeName="packetModel.EthernetPacket">
+        <MappingFragment StoreEntitySet="EthernetPackets">
+          <ScalarProperty Name="PacketId" ColumnName="PacketId" />
+          <ScalarProperty Name="DestinationHwAddress" ColumnName="DestinationHwAddress" />
+          <ScalarProperty Name="SourceHwAddress" ColumnName="SourceHwAddress" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IPPackets">
+      <EntityTypeMapping TypeName="packetModel.IPPacket">
+        <MappingFragment StoreEntitySet="IPPackets">
+          <ScalarProperty Name="PacketId" ColumnName="PacketId" />
+          <ScalarProperty Name="TimeToLive" ColumnName="TimeToLive" />
+          <ScalarProperty Name="SourceAddress" ColumnName="SourceAddress" />
+          <ScalarProperty Name="DestinationAddress" ColumnName="DestinationAddress" />
+          <ScalarProperty Name="HeaderLength" ColumnName="HeaderLength" />
+          <ScalarProperty Name="HopLimit" ColumnName="HopLimit" />
+          <ScalarProperty Name="NextHeader" ColumnName="NextHeader" />
+          <ScalarProperty Name="PayLoadLengh" ColumnName="PayLoadLengh" />
+          <ScalarProperty Name="Protocol" ColumnName="Protocol" />
+          <ScalarProperty Name="TotalLength" ColumnName="TotalLength" />
+          <ScalarProperty Name="Version" ColumnName="Version" />
+          <ScalarProperty Name="Checksum" ColumnName="Checksum" />
+          <ScalarProperty Name="ValidChecksum" ColumnName="ValidChecksum" />
+          <ScalarProperty Name="Color" ColumnName="Color" />
+          <ScalarProperty Name="DifferentiatedServices" ColumnName="DifferentiatedServices" />
+          <ScalarProperty Name="FragmentFlags" ColumnName="FragmentFlags" />
+          <ScalarProperty Name="FragmentOffset" ColumnName="FragmentOffset" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Packets">
+      <EntityTypeMapping TypeName="packetModel.Packet">
+        <MappingFragment StoreEntitySet="Packets">
+          <ScalarProperty Name="PacketId" ColumnName="PacketId" />
+          <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+          <ScalarProperty Name="FrameNumber" ColumnName="FrameNumber" />
+          <ScalarProperty Name="Data" ColumnName="Data" />
+          <ScalarProperty Name="Bytes" ColumnName="Bytes" />
+          <ScalarProperty Name="BytesLength" ColumnName="BytesLength" />
+          <ScalarProperty Name="BytesOffset" ColumnName="BytesOffset" />
+          <ScalarProperty Name="NeedsCopy" ColumnName="NeedsCopy" />
+          <ScalarProperty Name="Color" ColumnName="Color" />
+          <ScalarProperty Name="Header" ColumnName="Header" />
+          <ScalarProperty Name="HeaderLength" ColumnName="HeaderLength" />
+          <ScalarProperty Name="Bytes2" ColumnName="Bytes2" />
+          <ScalarProperty Name="BytesLength2" ColumnName="BytesLength2" />
+          <ScalarProperty Name="BytesOffset2" ColumnName="BytesOffset2" />
+          <ScalarProperty Name="NeedsCopy2" ColumnName="NeedsCopy2" />
+          <ScalarProperty Name="Color2" ColumnName="Color2" />
+          <ScalarProperty Name="Header2" ColumnName="Header2" />
+          <ScalarProperty Name="HeaderLength2" ColumnName="HeaderLength2" />
+          <ScalarProperty Name="Bytes3" ColumnName="Bytes3" />
+          <ScalarProperty Name="BytesLength3" ColumnName="BytesLength3" />
+          <ScalarProperty Name="BytesOffset3" ColumnName="BytesOffset3" />
+          <ScalarProperty Name="NeedsCopy3" ColumnName="NeedsCopy3" />
+          <ScalarProperty Name="Color3" ColumnName="Color3" />
+          <ScalarProperty Name="Header3" ColumnName="Header3" />
+          <ScalarProperty Name="HeaderLength3" ColumnName="HeaderLength3" />
+          <ScalarProperty Name="Bytes4" ColumnName="Bytes4" />
+          <ScalarProperty Name="BytesLength4" ColumnName="BytesLength4" />
+          <ScalarProperty Name="BytesOffset4" ColumnName="BytesOffset4" />
+          <ScalarProperty Name="NeedsCopy4" ColumnName="NeedsCopy4" />
+          <ScalarProperty Name="Color4" ColumnName="Color4" />
+          <ScalarProperty Name="Header4" ColumnName="Header4" />
+          <ScalarProperty Name="HeaderLength4" ColumnName="HeaderLength4" />
+          <ScalarProperty Name="Bytes5" ColumnName="Bytes5" />
+          <ScalarProperty Name="BytesLength5" ColumnName="BytesLength5" />
+          <ScalarProperty Name="BytesOffset5" ColumnName="BytesOffset5" />
+          <ScalarProperty Name="NeedsCopy5" ColumnName="NeedsCopy5" />
+          <ScalarProperty Name="Color5" ColumnName="Color5" />
+          <ScalarProperty Name="Header5" ColumnName="Header5" />
+          <ScalarProperty Name="HeaderLength5" ColumnName="HeaderLength5" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TcpPackets">
+      <EntityTypeMapping TypeName="packetModel.TcpPacket">
+        <MappingFragment StoreEntitySet="TcpPackets">
+          <ScalarProperty Name="PacketId" ColumnName="PacketId" />
+          <ScalarProperty Name="SourcePort" ColumnName="SourcePort" />
+          <ScalarProperty Name="DestinationPort" ColumnName="DestinationPort" />
+          <ScalarProperty Name="SequenceNumber" ColumnName="SequenceNumber" />
+          <ScalarProperty Name="AcknowledgmentNumber" ColumnName="AcknowledgmentNumber" />
+          <ScalarProperty Name="DataOffset" ColumnName="DataOffset" />
+          <ScalarProperty Name="WindowSize" ColumnName="WindowSize" />
+          <ScalarProperty Name="Checksum" ColumnName="Checksum" />
+          <ScalarProperty Name="ValidChecksum" ColumnName="ValidChecksum" />
+          <ScalarProperty Name="ValidTCPChecksum" ColumnName="ValidTCPChecksum" />
+          <ScalarProperty Name="AllFlags" ColumnName="AllFlags" />
+          <ScalarProperty Name="Urg" ColumnName="Urg" />
+          <ScalarProperty Name="Ack" ColumnName="Ack" />
+          <ScalarProperty Name="Psh" ColumnName="Psh" />
+          <ScalarProperty Name="Rst" ColumnName="Rst" />
+          <ScalarProperty Name="Syn" ColumnName="Syn" />
+          <ScalarProperty Name="Fin" ColumnName="Fin" />
+          <ScalarProperty Name="ECN" ColumnName="ECN" />
+          <ScalarProperty Name="CWR" ColumnName="CWR" />
+          <ScalarProperty Name="Color" ColumnName="Color" />
+          <ScalarProperty Name="UrgentPointer" ColumnName="UrgentPointer" />
+          <ScalarProperty Name="Options" ColumnName="Options" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UdpPackets">
+      <EntityTypeMapping TypeName="packetModel.UdpPacket">
+        <MappingFragment StoreEntitySet="UdpPackets">
+          <ScalarProperty Name="PacketId" ColumnName="PacketId" />
+          <ScalarProperty Name="SourcePort" ColumnName="SourcePort" />
+          <ScalarProperty Name="DestinationPort" ColumnName="DestinationPort" />
+          <ScalarProperty Name="Length" ColumnName="Length" />
+          <ScalarProperty Name="Checksum" ColumnName="Checksum" />
+          <ScalarProperty Name="ValidChecksum" ColumnName="ValidChecksum" />
+          <ScalarProperty Name="ValidUDPChecksum" ColumnName="ValidUDPChecksum" />
+          <ScalarProperty Name="Color" ColumnName="Color" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

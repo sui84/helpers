@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "..\Common\Common.csproj", "{58C5DB32-7252-4D61-A347-1B52C9A27605}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpPcap", "..\SharpPcap\SharpPcap.csproj", "{24262E52-1304-4A25-8F73-A3B06E40592E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{58C5DB32-7252-4D61-A347-1B52C9A27605}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58C5DB32-7252-4D61-A347-1B52C9A27605}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58C5DB32-7252-4D61-A347-1B52C9A27605}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{58C5DB32-7252-4D61-A347-1B52C9A27605}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{58C5DB32-7252-4D61-A347-1B52C9A27605}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{58C5DB32-7252-4D61-A347-1B52C9A27605}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58C5DB32-7252-4D61-A347-1B52C9A27605}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58C5DB32-7252-4D61-A347-1B52C9A27605}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{58C5DB32-7252-4D61-A347-1B52C9A27605}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{58C5DB32-7252-4D61-A347-1B52C9A27605}.Release|x86.ActiveCfg = Release|Any CPU
+		{24262E52-1304-4A25-8F73-A3B06E40592E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24262E52-1304-4A25-8F73-A3B06E40592E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24262E52-1304-4A25-8F73-A3B06E40592E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{24262E52-1304-4A25-8F73-A3B06E40592E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{24262E52-1304-4A25-8F73-A3B06E40592E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{24262E52-1304-4A25-8F73-A3B06E40592E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24262E52-1304-4A25-8F73-A3B06E40592E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24262E52-1304-4A25-8F73-A3B06E40592E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{24262E52-1304-4A25-8F73-A3B06E40592E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{24262E52-1304-4A25-8F73-A3B06E40592E}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
