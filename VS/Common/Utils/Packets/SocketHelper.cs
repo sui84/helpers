@@ -6,14 +6,14 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 
-namespace Common.Utils
+namespace Common.Packets.Utils
 {
     public static class SocketServerHelper
     {
         private static byte[] result = new byte[1024];
         private static int myProt = 8885;   //端口  
         static Socket serverSocket;
-        static void Start(string[] args)
+        public static void Start()
         {
             //服务器IP地址  
             IPAddress ip = IPAddress.Parse("127.0.0.1");
@@ -70,7 +70,7 @@ namespace Common.Utils
     public static class SocketClientHelper
     {
         private static byte[] result = new byte[1024];
-        static void Start(string[] args)
+        public static void Start()
         {
             //设定服务器IP地址  
             IPAddress ip = IPAddress.Parse("127.0.0.1");

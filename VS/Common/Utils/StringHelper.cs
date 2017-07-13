@@ -89,5 +89,95 @@ namespace Common.Utils
         {
             return str.ToCharArray();
         }
+
+        //string => Hexadecimal string
+        public static string ConverToHexString(string istr)
+        {
+            StringBuilder hexstr = new StringBuilder("0x");
+            char[] values = istr.ToCharArray();
+            foreach (char letter in values)
+            {
+                // Get the integral value of the character.
+                int value = Convert.ToInt32(letter);
+                // Convert the decimal value to a hexadecimal value in string form.
+                string hexOutput = String.Format("{0:X}", value);
+                hexstr.Append(hexOutput);
+            }
+            return hexstr.ToString();
+        }
+
+        /// 作用：将字符串内容转化为16进制数据编码，其逆过程是Decode
+        public static string HexEncode(string strEncode)
+        {
+            string strReturn = "";//  存储转换后的编码
+            foreach (short shortx in strEncode.ToCharArray())
+            {
+                strReturn += shortx.ToString("X4");
+            }
+            return strReturn;
+        }
+
+        /// 作用：将16进制数据编码转化为字符串，是Encode的逆过程
+        public static string HexDecode(string strDecode)
+        {
+            string sResult = "";
+            for (int i = 0; i < strDecode.Length / 4; i++)
+            {
+                sResult += (char)short.Parse(strDecode.Substring(i * 4, 4), global::System.Globalization.NumberStyles.HexNumber);
+            }
+            return sResult;
+        }
+
+         /**   
+         * 字符串转换成十六进制字符串  
+         * @param String str 待转换的ASCII字符串  
+         * @return String 每个Byte之间空格分隔，如: [61 6C 6B]  
+         */      
+        public static String Str2HexStr(String str)    
+        {      
+  
+            char[] chars = "0123456789ABCDEF".ToCharArray();      
+            StringBuilder sb = new StringBuilder("");    
+            byte[] bs = Encoding.Default.GetBytes(str) ;    
+            int bit;      
+        
+            for (int i = 0; i < bs.Length; i++)    
+            {      
+                bit = (bs[i] & 0x0f0) >> 4;      
+                sb.Append(chars[bit]);      
+                bit = bs[i] & 0x0f;      
+                sb.Append(chars[bit]);    
+               // sb.Append(' ');    
+            }      
+            return sb.ToString().Trim();      
+        }    
+    
+        /**   
+         * 十六进制转换字符串  
+         * @param String str Byte字符串(Byte之间无分隔符 如:[616C6B])  
+         * @return String 对应的字符串  
+         */      
+        public static String HexStr2Str(String hexStr,string charset= "utf-8")    
+        {      
+            byte[] bytes = HexStr2Bytes(hexStr);      
+            return System.Text.Encoding.GetEncoding(charset).GetString(bytes);
+        }
+
+        public static byte[] HexStr2Bytes(String hexStr)
+        {
+            String str = "0123456789ABCDEF";
+            char[] hexs = hexStr.ToCharArray();
+            byte[] bytes = new byte[hexStr.Length / 2];
+            int n;
+
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                n = str.IndexOf(hexs[2 * i]) * 16;
+                n += str.IndexOf(hexs[2 * i + 1]);
+                bytes[i] = (byte)(n & 0xff);
+            }
+            return bytes;
+        }  
+
     }
 }

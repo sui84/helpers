@@ -7,11 +7,11 @@ E:\MyProjects\Github\sharppcap\SharpPcap\obj\Debug\SharpPcap.dll
 E:\MyProjects\Github\sharppcap\SharpPcap\obj\Debug\SharpPcap.pdb
 E:\MyProjects\Github\sharppcap\SharpPcap\bin\Debug\SharpPcap.xml
 E:\MyProjects\Github\helpers\VS\SharpPcap\bin\Debug\SharpPcap.xml
-E:\MyProjects\Github\helpers\VS\SharpPcap\bin\Debug\SharpPcap.dll
 E:\MyProjects\Github\helpers\VS\SharpPcap\bin\Debug\SharpPcap.pdb
-E:\MyProjects\Github\helpers\VS\SharpPcap\obj\Debug\SharpPcap.dll
 E:\MyProjects\Github\helpers\VS\SharpPcap\obj\Debug\SharpPcap.pdb
 E:\MyProjects\Github\helpers\VS\SharpPcap\bin\Debug\PacketDotNet.dll
 E:\MyProjects\Github\helpers\VS\SharpPcap\bin\Debug\log4net.dll
 E:\MyProjects\Github\helpers\VS\SharpPcap\bin\Debug\PacketDotNet.pdb
 E:\MyProjects\Github\helpers\VS\SharpPcap\obj\Debug\SharpPcap.csprojResolveAssemblyReference.cache
+E:\MyProjects\Github\helpers\VS\SharpPcap\bin\Debug\SharpPcap.exe
+E:\MyProjects\Github\helpers\VS\SharpPcap\obj\Debug\SharpPcap.exe

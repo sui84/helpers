@@ -7,9 +7,10 @@ using SharpPcap.LibPcap;
 using PacketDotNet;
 using System.Data;
 using System.Reflection;
+using Common.Utils;
 
 
-namespace Common.Utils
+namespace Common.Packets.Utils
 {
     public class PacketHelper
     {

@@ -65,9 +65,9 @@ E:\MyProjects\Github\helpers\VS\Common\obj\Debug\ClassLibrary.pdb
 E:\MyProjects\Github\helpers\VS\Common\bin\Debug\ClassLibrary.exe
 E:\MyProjects\Github\helpers\VS\Common\obj\Debug\ClassLibrary.exe
 E:\MyProjects\Github\helpers\VS\Common\bin\Debug\PacketDotNet.dll
-E:\MyProjects\Github\helpers\VS\Common\bin\Debug\SharpPcap.dll
 E:\MyProjects\Github\helpers\VS\Common\bin\Debug\log4net.dll
 E:\MyProjects\Github\helpers\VS\Common\bin\Debug\SharpPcap.pdb
 E:\MyProjects\Github\helpers\VS\Common\bin\Debug\SharpPcap.xml
 E:\MyProjects\Github\helpers\VS\Common\bin\Debug\PacketDotNet.pdb
 E:\MyProjects\Github\helpers\VS\Common\bin\Debug\ClassLibrary.exe.config
+E:\MyProjects\Github\helpers\VS\Common\bin\Debug\SharpPcap.exe

@@ -31,7 +31,7 @@
     <RootNamespace>Common</RootNamespace>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Common.Tests.TestPacketHelper</StartupObject>
+    <StartupObject>Common.Tests.TestSocketHelper</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -181,6 +181,7 @@
     <Compile Include="Models\TestModel.cs" />
     <Compile Include="Tests\TestCacheHelper.cs" />
     <Compile Include="Tests\TestPacketHelper.cs" />
+    <Compile Include="Tests\TestSocketHelper.cs" />
     <Compile Include="Tests\TestSqlServerHelper.cs" />
     <Compile Include="Tests\TestXmlHelper.cs" />
     <Compile Include="Tests\TestLinq.cs" />
@@ -188,9 +189,11 @@
     <Compile Include="Utils\ADHelper.cs" />
     <Compile Include="Utils\AppLogger.cs" />
     <Compile Include="Utils\CacheHelper.cs" />
-    <Compile Include="Utils\HttpHeaderHelper.cs" />
-    <Compile Include="Utils\PacketHelper.cs" />
-    <Compile Include="Utils\SocketHelper.cs" />
+    <Compile Include="Utils\Packets\HttpHeaderHelper.cs" />
+    <Compile Include="Utils\Packets\HttpHelper.cs" />
+    <Compile Include="Utils\Packets\IcmpHelper.cs" />
+    <Compile Include="Utils\Packets\PacketHelper.cs" />
+    <Compile Include="Utils\Packets\SocketHelper.cs" />
     <Compile Include="Utils\ValueTypeHelper.cs" />
     <Compile Include="Utils\ConnStrHelper.cs" />
     <Compile Include="Utils\CookieHelper.cs" />
@@ -202,7 +205,7 @@
     <Compile Include="Utils\FileHelper.cs" />
     <Compile Include="Utils\FindDeletedData.cs" />
     <Compile Include="Utils\SqlServerHelper.cs" />
-    <Compile Include="Utils\IPHelper.cs" />
+    <Compile Include="Utils\Packets\IPHelper.cs" />
     <Compile Include="Utils\JSONHelper.cs" />
     <Compile Include="Utils\LinqHelper.cs" />
     <Compile Include="Utils\LogFormatHelper.cs" />

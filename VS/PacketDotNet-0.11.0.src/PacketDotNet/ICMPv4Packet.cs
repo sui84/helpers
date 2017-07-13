@@ -161,6 +161,21 @@ namespace PacketDotNet
             payloadPacketOrData.TheByteArraySegment = header.EncapsulatedBytes();
         }
 
+        public ICMPv4Packet()
+        {
+            this.TypeCode = ICMPv4TypeCodes.EchoReply;
+            this.Checksum = 0; 
+            this.ID = 45;
+            this.Sequence = 0;
+            int PingData = 24; // sizeof(IcmpPacket) - 8; 
+            this.Data = new Byte[PingData];
+            // ≥ı ºªØPacket.Data 
+            for (int i = 0; i < PingData; i++)
+            {
+                this.Data[i] = (byte)'#';
+            } 
+
+        }
         /// <summary>
         /// Construct with parent packet
         /// </summary>

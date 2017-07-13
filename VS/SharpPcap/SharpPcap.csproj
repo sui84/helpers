@@ -15,7 +15,7 @@
     <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
     <DefaultTargetSchema>IE50</DefaultTargetSchema>
     <DelaySign>false</DelaySign>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>SharpPcap</RootNamespace>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <FileUpgradeFlags>
@@ -75,6 +75,9 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>harpPcap.Tests.TestSocketHelper</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -118,6 +121,8 @@
     <Compile Include="Pcap.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Tests\SocketHelper.cs" />
+    <Compile Include="Tests\TestSocketHelper.cs" />
     <Compile Include="Version.cs">
       <SubType>Code</SubType>
     </Compile>

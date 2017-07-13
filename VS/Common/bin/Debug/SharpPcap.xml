@@ -3634,6 +3634,17 @@
             WIN32 only, based on struct pcap_stat in pcap.h
             </summary>
         </member>
+        <member name="M:SharpPcap.Tests.SocketServerHelper.ListenClientConnect">
+            <summary>  
+            监听客户端连接  
+            </summary>  
+        </member>
+        <member name="M:SharpPcap.Tests.SocketServerHelper.ReceiveMessage(System.Object)">
+            <summary>  
+            接收消息  
+            </summary>  
+            <param name="clientSocket"></param>  
+        </member>
         <member name="T:SharpPcap.AirPcap.AirPcapVersion">
             <summary>
             Version
