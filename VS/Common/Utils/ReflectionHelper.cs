@@ -414,5 +414,24 @@ namespace Common.Utils
                 }
             }
         }
+
+        public static List<string> GetObjectProperties(Type objType, params string[] excludedProperties)
+        {
+            List<string> properties = new List<string>();
+            PropertyInfo[] props = objType.GetProperties();
+            foreach (PropertyInfo p in props)
+            {
+                if (excludedProperties != null && excludedProperties.Contains(p.Name) && !p.PropertyType.IsArray)
+                {
+                    continue;   //ignore the property if exists in the specified excluded properties
+                }
+                if (p.CanRead && p.PropertyType.Namespace == "System")
+                {
+                    properties.Add(p.Name);
+                    
+                }
+            }
+            return properties;
+        }
     }
 }
