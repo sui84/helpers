@@ -10,6 +10,7 @@ using System.Xml.Linq;
 using System.Xml.XPath;
 using System.Xml.Serialization;
 using System.Text;
+using System.Runtime.Serialization;
 
 namespace Common.Utils{
 
@@ -50,6 +51,21 @@ namespace Common.Utils{
                 
         }
 
+        public static XElement DataContractToXml(object data)
+        {
+            if (data == null)
+                throw new ArgumentNullException("data");
+
+            XDocument doc = new XDocument();
+            using (XmlWriter writer = doc.CreateWriter())
+            {
+                DataContractSerializer ser = new DataContractSerializer(data.GetType());
+                ser.WriteObject(writer, data);
+                writer.Flush();
+            }
+            return doc.Root;
+
+        }
 
         public static void ObjToXmlFile(Object obj , string filePath)
         {
