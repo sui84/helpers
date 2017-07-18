@@ -204,32 +204,36 @@ namespace Common.Utils
             //SqlBulkCopy - 这样的写法会报错 Unexpected existing transaction
             // using (SqlTransaction tx = destinationConnection.BeginTransaction(IsolationLevel.RepeatableRead)){}
 
-            SqlConnection conn = new SqlConnection(connStr);
-            using (SqlTransaction tx = conn.BeginTransaction())
+            using (SqlConnection conn = new SqlConnection(connStr))
             {
-                using (System.Data.SqlClient.SqlBulkCopy bcp = new System.Data.SqlClient.SqlBulkCopy(conn, SqlBulkCopyOptions.Default, tx))
+                conn.Open();
+                using (SqlTransaction tx = conn.BeginTransaction())
                 {
-                    try{
-                        bcp.DestinationTableName = tbName;
-                        if (mapCols != null)
+                    using (System.Data.SqlClient.SqlBulkCopy bcp = new System.Data.SqlClient.SqlBulkCopy(conn, SqlBulkCopyOptions.Default, tx))
+                    {
+                        try
                         {
-                            for (int i = 0; i < mapCols[0].Count(); i++)
+                            bcp.DestinationTableName = tbName;
+                            if (mapCols != null)
                             {
-                                bcp.ColumnMappings.Add(mapCols[0][i], mapCols[1][i]);
+                                for (int i = 0; i < mapCols[0].Count(); i++)
+                                {
+                                    bcp.ColumnMappings.Add(mapCols[0][i], mapCols[1][i]);
+                                }
                             }
+                            bcp.WriteToServer(SourceData);
                         }
-                        bcp.WriteToServer(SourceData);
-                     }
-                    catch (Exception ex)
-                    {
-                        tx.Rollback();
-                    }
-                    finally
-                    {
-                        tx.Dispose();
+                        catch (Exception ex)
+                        {
+                            tx.Rollback();
+                        }
+                        finally
+                        {
+                            tx.Dispose();
+                        }
                     }
                 }
-             }
+            }
         }
 
         public DataTable AddColumn(DataTable dt, string colName, string defaultValue)
