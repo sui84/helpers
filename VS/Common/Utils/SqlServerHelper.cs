@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +9,8 @@ using Microsoft.SqlServer.Management;
 using System.Data;
 using System.Reflection;
 using System.Collections;
-using System.Collections.Specialized;  
+using System.Collections.Specialized;
+using System.Data.SqlClient;  
 
 //Microsoft.SqlServer.ConnectionInfo.dll
 //Microsoft.SqlServer.Management.Sdk.Sfc.dll
@@ -69,7 +70,7 @@ namespace Common.Utils
 
                 foreach (PropertyInfo p in props)
                 {
-                    if (p.CanRead && p.PropertyType.Namespace == "System" && !p.PropertyType.IsArray)
+                    if (p.CanRead && p.PropertyType.Namespace == "System")
                     {
                         Column c = new Column(tb, p.Name);
                         Type columnType = p.PropertyType;
@@ -122,13 +123,15 @@ namespace Common.Utils
                 case "Boolean":
                     dataType = DataType.Bit;
                     break;
-                case "Byte[]":
+                case "Byte[]": //  p.PropertyType.IsArray
                     dataType = DataType.VarBinaryMax;
+                    break;
+                case "Int64":
+                    dataType = DataType.BigInt;
                     break;
                 case "Decimal":
                     //dataType = DataType.Decimal(11, 2);
                     //break;
-                case "Int64":
                 case "Float":
                 case "Double":
                 case "Single":  
@@ -140,11 +143,12 @@ namespace Common.Utils
             return dataType;
         }
 
-        public void CreateTable(string serverName, string userName, string password, string spName, Type paraType,string spContent)
+        public void CreateTable(string serverName,string connStr, string spName, Type paraType,string spContent)
         {
             //创建存储过程  
             Server s = new Server(serverName);
-            ServerConnection sc = new ServerConnection(serverName, userName, password);
+            SqlConnection conn = new SqlConnection(connStr);
+            ServerConnection sc = new ServerConnection(conn);
             Database db = s.Databases[0];
             StoredProcedure sp = new StoredProcedure(db, spName);
             foreach (PropertyInfo p in paraType.GetProperties())
