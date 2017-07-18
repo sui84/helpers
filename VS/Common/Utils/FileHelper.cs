@@ -190,5 +190,19 @@ namespace Common.Utils
             else return null;
            
         }
+
+        public static string GetFileSizeAsString(long size)
+        {
+            double s = size;
+            string[] format = new string[] { "{0} bytes", "{0} KB", "{0} MB", "{0} GB", "{0} TB", "{0} PB", "{0} EB", "{0} ZB", "{0} YB" };
+            int i = 0;
+            while (i < format.Length - 1 && s >= 1024)
+            {
+                s = (100 * s / 1024) / 100.0;
+                i++;
+            }
+            return string.Format(format[i], s.ToString("###,###,##0.##"));
+        }
+
     }
 }
