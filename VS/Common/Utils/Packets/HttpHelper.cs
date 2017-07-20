@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -17,7 +17,7 @@ namespace Common.Packets.Utils
             Socket s = null;
             IPHostEntry hostEntry = null;
             // Get host related information.
-            if (IPHelper.ValidIP(server))
+            if (NetHelper.ValidIP(server))
             {
                 hostEntry = new IPHostEntry();
                 hostEntry.AddressList = new IPAddress[] { IPAddress.Parse(server) };
