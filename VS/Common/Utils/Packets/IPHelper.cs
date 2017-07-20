@@ -7,10 +7,13 @@ using System.Data.OleDb;
 using System.Net;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
+using System.Net.NetworkInformation;
+using System.Runtime.InteropServices;
+using Common.Utils;
 
 namespace Common.Packets.Utils
 {
-    public class IPHelper
+    public class NetHelper
     {
         public static string GetIP4Address(string ipStr="")
         {
@@ -30,6 +33,31 @@ namespace Common.Packets.Utils
             }
             return ipStr;
         }
+
+        #region 获取mac地址
+        /// <summary>
+        /// 返回描述本地计算机上的网络接口的对象(网络接口也称为网络适配器)。
+        /// </summary>
+        /// <returns></returns>
+        public static NetworkInterface[] NetCardInfo()
+        {
+            return NetworkInterface.GetAllNetworkInterfaces();
+        }
+        ///<summary>
+        /// 通过NetworkInterface读取网卡Mac
+        ///</summary>
+        ///<returns></returns>
+        public static List<string> GetMacByNetworkInterface()
+        {
+            List<string> macs = new List<string>();
+            NetworkInterface[] interfaces = NetworkInterface.GetAllNetworkInterfaces();
+            foreach (NetworkInterface ni in interfaces)
+            {
+                macs.Add(ni.GetPhysicalAddress().ToString());
+            }
+            return macs;
+        }
+        #endregion
 
         public static bool ValidIP(string ipStr)
         {
@@ -52,7 +80,7 @@ namespace Common.Packets.Utils
 
         public static IPAddress IPIntToIPAddress(long ipInt)
         {
-            //ʹ��long ulong int �������ʹ��uint��û����
+            //使用long ulong int 会溢出，使用uint就没问题
             uint netInt = (uint)IPAddress.HostToNetworkOrder((Int32)ipInt);
             IPAddress ipaddr = new IPAddress((long)netInt);
             return ipaddr;
@@ -60,14 +88,14 @@ namespace Common.Packets.Utils
 
         public static string IPLongToStr(long iplong)
         {
-            // ����ת��Ϊ�ַ���
+            // 数字转换为字符串
             System.Net.IPAddress ipaddress = System.Net.IPAddress.Parse(iplong.ToString());
             string strdreamduip = ipaddress.ToString();
             return strdreamduip;
         }
 
-        //ͨ��ת������
-        /// <summary>��IP��ַ��ʽ��Ϊ������</summary>
+        //通用转换函数
+        /// <summary>将IP地址格式化为整数型</summary>
         /// <param name="ip"></param>
         /// <returns></returns>
         public static long IPStrToLong(string ip)
@@ -81,6 +109,43 @@ namespace Common.Packets.Utils
             long p3 = long.Parse(ipArr[2]) * 256;long p4 = long.Parse(ipArr[3]);
             ip_Int = p1 + p2 + p3 + p4;return ip_Int;
         }
-        
+
+        #region 检测本机是否联网（互联网）
+        [DllImport("wininet")]
+        private extern static bool InternetGetConnectedState(out int connectionDescription, int reservedValue);
+        /// <summary>
+        /// 检测本机是否联网
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsConnectedInternet()
+        {
+            int i = 0;
+            if (InternetGetConnectedState(out i, 0))
+            {
+                //已联网
+                return true;
+            }
+            else
+            {
+                //未联网
+                return false;
+            }
+        }
+        #endregion
+
+        #region 获取本机的计算机名
+        /// <summary>
+        /// 获取本机的计算机名
+        /// </summary>
+        public static string LocalHostName
+        {
+            get
+            {
+                return Dns.GetHostName();
+            }
+        }
+        #endregion
+
+ 
     }
 }
