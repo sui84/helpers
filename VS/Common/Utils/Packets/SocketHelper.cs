@@ -12,16 +12,15 @@ namespace Common.Packets.Utils
     public static class SocketServerHelper
     {
         private static byte[] result = new byte[1024];
-        private static int myProt = 8885;   //端口  
         static Socket serverSocket;
-        public static void Start()
+        public static void Start(string ipStr , int port)
         {
             //服务器IP地址  
-            IPAddress ip = IPAddress.Parse("127.0.0.1");
+            IPAddress ip = IPAddress.Parse(ipStr);
             serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            serverSocket.Bind(new IPEndPoint(ip, myProt));  //绑定IP地址：端口  
+            serverSocket.Bind(new IPEndPoint(ip, port));  //绑定IP地址：端口  
             serverSocket.Listen(10);    //设定最多10个排队连接请求  
-            Console.WriteLine("启动监听{0}成功", serverSocket.LocalEndPoint.ToString());
+            Console.WriteLine("Listen start {0}", serverSocket.LocalEndPoint.ToString());
             //通过Clientsoket发送数据  
             Thread myThread = new Thread(ListenClientConnect);
             myThread.Start();
@@ -55,7 +54,7 @@ namespace Common.Packets.Utils
                 {
                     //通过clientSocket接收数据  
                     int receiveNumber = myClientSocket.Receive(result);
-                    Console.WriteLine("接收客户端{0}消息{1}", myClientSocket.RemoteEndPoint.ToString(), Encoding.ASCII.GetString(result, 0, receiveNumber));
+                    Console.WriteLine("Receive {0} message {1}", myClientSocket.RemoteEndPoint.ToString(), Encoding.ASCII.GetString(result, 0, receiveNumber));
                 }
                 catch (Exception ex)
                 {
@@ -71,24 +70,24 @@ namespace Common.Packets.Utils
     public static class SocketClientHelper
     {
         private static byte[] result = new byte[1024];
-        public static void Start()
+        public static void Start(string ipStr , int port)
         {
             //设定服务器IP地址  
-            IPAddress ip = IPAddress.Parse("127.0.0.1");
+            IPAddress ip = IPAddress.Parse(ipStr);
             Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             try
             {
-                clientSocket.Connect(new IPEndPoint(ip, 8885)); //配置服务器IP与端口  
-                Console.WriteLine("连接服务器成功");
+                clientSocket.Connect(new IPEndPoint(ip, port)); //配置服务器IP与端口  
+                Console.WriteLine("Connected!");
             }
             catch
             {
-                Console.WriteLine("连接服务器失败，请按回车键退出！");
+                Console.WriteLine("Connect failed！");
                 return;
             }
             //通过clientSocket接收数据  
             int receiveLength = clientSocket.Receive(result);
-            Console.WriteLine("接收服务器消息：{0}", Encoding.ASCII.GetString(result, 0, receiveLength));
+            Console.WriteLine("Receive message：{0}", Encoding.ASCII.GetString(result, 0, receiveLength));
             //通过 clientSocket 发送数据  
             for (int i = 0; i < 10; i++)
             {
@@ -97,17 +96,153 @@ namespace Common.Packets.Utils
                     Thread.Sleep(1000);    //等待1秒钟  
                     string sendMessage = "client send Message Hellp" + DateTime.Now;
                     clientSocket.Send(Encoding.ASCII.GetBytes(sendMessage));
-                    Console.WriteLine("向服务器发送消息：{0}" + sendMessage);
+                    Console.WriteLine("Send message：{0}" + sendMessage);
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Console.WriteLine("Exception:{0}\r\n{1}", ex.Message, ex.StackTrace);
                     clientSocket.Shutdown(SocketShutdown.Both);
                     clientSocket.Close();
                     break;
                 }
             }
-            Console.WriteLine("发送完毕，按回车键退出");
+            Console.WriteLine("Finished!");
             Console.ReadLine();
+        }
+
+        /// <summary>
+        /// Opens up the socket and begins trying to connect to the provided domain
+        /// </summary>
+        /// <param name="domain">The domain listening on SMTP ports</param>
+        /// <param name="recipient">The email recipient</param>
+        /// <returns>Bool verifying success</returns>
+        public static bool ActivateSocket(string domain, string recipient)
+        {
+            //X509Certificate cert = new X509Certificate();
+
+            //Prepare our first command
+            string SMTPcommand = "HELO \r\n";
+            Encoding ASCII = Encoding.ASCII;
+            //convert to byte array and get the buffers ready
+            Byte[] ByteCommand = ASCII.GetBytes(SMTPcommand);
+            Byte[] RecvResponseCode = new Byte[3];
+            Byte[] RecvFullMessage = new Byte[256];
+            //method response value
+            bool TransactionSuccess = false;
+
+
+
+            try
+            {
+                // do all of this outside so its fresh after every iteration
+                Socket s = null;
+                IPEndPoint hostEndPoint;
+                IPAddress hostAddress = null;
+                int conPort = 587;
+
+                // get all the ip's assosciated with the domain
+                IPHostEntry hostInfo = Dns.GetHostEntry(domain);
+                IPAddress[] IPaddresses = hostInfo.AddressList;
+
+                // go through each ip and attempt a connection
+                for (int index = 0; index < IPaddresses.Length; index++)
+                {
+                    hostAddress = IPaddresses[index];
+                    // get our end point
+                    hostEndPoint = new IPEndPoint(hostAddress, conPort);
+
+                    // prepare the socket
+                    s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                    s.ReceiveTimeout = 2000;
+                    s.SendTimeout = 4000;
+                    try { s.Connect(hostEndPoint); }
+                    catch { Console.WriteLine("Connection timed out..."); }
+
+                    if (!s.Connected)
+                    {
+                        // Connection failed, try next IPaddress.
+                        TransactionSuccess = false;
+                        s = null;
+                        continue;
+                    }
+                    else
+                    {
+                        // im going through the send mail, SMTP proccess here, slightly incorrectly but it
+                        //is enough to promote a response from the server
+
+                        s.Receive(RecvFullMessage);
+                        Console.WriteLine(ASCII.GetString(RecvFullMessage));
+
+                        s.Send(ByteCommand, ByteCommand.Length, 0);
+                        s.Receive(RecvFullMessage);
+                        Console.WriteLine(ASCII.GetString(RecvFullMessage));
+
+                        ByteCommand = ASCII.GetBytes("MAIL FROM:sender@venetianqa.local\r\n");
+                        s.Send(ByteCommand, ByteCommand.Length, 0);
+                        s.Receive(RecvFullMessage);
+                        Console.WriteLine(ASCII.GetString(RecvFullMessage));
+
+                        ByteCommand = ASCII.GetBytes("RCPT TO:qatest@venetianqa.local\r\n");
+                        s.Send(ByteCommand, ByteCommand.Length, 0);
+                        s.Receive(RecvFullMessage);
+                        Console.WriteLine(ASCII.GetString(RecvFullMessage));
+
+                        ByteCommand = ASCII.GetBytes("DATA\r\n");
+                        s.Send(ByteCommand, ByteCommand.Length, 0);
+                        s.Receive(RecvFullMessage);
+                        Console.WriteLine(ASCII.GetString(RecvFullMessage));
+
+                        ByteCommand = ASCII.GetBytes("this email was sent as a test!\r\n.\r\n");
+                        s.Send(ByteCommand, ByteCommand.Length, 0);
+                        s.Receive(RecvFullMessage);
+                        Console.WriteLine(ASCII.GetString(RecvFullMessage));
+
+                        ByteCommand = ASCII.GetBytes("SEND\r\n");
+                        s.Send(ByteCommand, ByteCommand.Length, 0);
+                        s.Receive(RecvFullMessage);
+                        Console.WriteLine(ASCII.GetString(RecvFullMessage));
+
+                        ByteCommand = ASCII.GetBytes("QUIT\r\n");
+                        s.Send(ByteCommand, ByteCommand.Length, 0);
+                        s.Receive(RecvFullMessage);
+                        Console.WriteLine(ASCII.GetString(RecvFullMessage));
+
+                        int i = 0;
+                        TransactionSuccess = true;
+                    }
+
+                }
+
+
+            }
+
+            catch (SocketException e)
+            {
+                Console.WriteLine("SocketException caught!!!");
+                Console.WriteLine("Source : " + e.Source);
+                Console.WriteLine("Message : " + e.Message);
+            }
+            catch (ArgumentNullException e)
+            {
+                Console.WriteLine("ArgumentNullException caught!!!");
+                Console.WriteLine("Source : " + e.Source);
+                Console.WriteLine("Message : " + e.Message);
+            }
+            catch (NullReferenceException e)
+            {
+                Console.WriteLine("NullReferenceException caught!!!");
+                Console.WriteLine("Source : " + e.Source);
+                Console.WriteLine("Message : " + e.Message);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception caught!!!");
+                Console.WriteLine("Source : " + e.Source);
+                Console.WriteLine("Message : " + e.Message);
+            }
+
+            return TransactionSuccess;
+
         }
 
         #region 获取远程客户机的IP地址
@@ -440,5 +575,71 @@ namespace Common.Packets.Utils
             }
         }
         #endregion
+
+
+
+        }
     }
-}
+
+    #region Socket Send Command
+    //email:
+    //List<string> msgs = new List<string>();
+    //msgs.Add("HELO\r\n");
+    //msgs.Add("MAIL FROM: sender@test.com\r\n");
+    //msgs.Add("RCPT TO: test@test.com\r\n");
+    //msgs.Add("DATA\r\n");
+    //msgs.Add("subject: test\r\nmessage content\r\n.\r\n");
+    //msgs.Add("quit");
+    public class SocketSendHelper
+    {
+        public List<string> Start(string ipStr, int port, List<string> msgs, byte[] recvBytes)
+        {
+            List<string> receiveMsgs = new List<string>();
+            //设定服务器IP地址  
+            try
+            {
+                IPAddress ip = IPAddress.Parse(ipStr);
+                Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                clientSocket.Connect(new IPEndPoint(ip, port)); //配置服务器IP与端口  
+                Console.WriteLine("Connected!");
+            
+                //通过clientSocket接收数据  
+                int receiveLength = clientSocket.Receive(recvBytes);
+                Console.WriteLine("Receive message：{0}", Encoding.ASCII.GetString(recvBytes, 0, receiveLength));
+                //通过 clientSocket 发送数据  
+                foreach (string msg in msgs)
+                {
+                    try
+                    {
+                        clientSocket.Send(Encoding.ASCII.GetBytes(msg));
+                        Console.WriteLine("Send message：{0}", msg);
+                        //通过clientSocket接收数据  
+                        byte[] receiveData = new byte[10240];
+                        int receiveLen = clientSocket.Receive(receiveData);
+                        string revmsg = Encoding.ASCII.GetString(receiveData, 0, receiveLen); ;
+                        receiveMsgs.Add(revmsg);
+                        Console.WriteLine("Receive message：{0}", revmsg);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Exception:{0}\r\n{1}", ex.Message, ex.StackTrace);
+                        receiveMsgs.Add("Error: " + ex.Message);
+                        break;
+                    }
+                }
+                Console.WriteLine("Finished!");
+                clientSocket.Shutdown(SocketShutdown.Both);
+                clientSocket.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception:{0}\r\n{1}", ex.Message, ex.StackTrace);
+                return null;
+            }
+            return receiveMsgs;
+        }
+        
+    #endregion
+
+
+    }
