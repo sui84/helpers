@@ -9,6 +9,17 @@ namespace Common.Utils
 {
     public class StringHelper
     {
+        public static string StrToBase4String(string str)
+        {
+            return StrToBase4String(str,Encoding.UTF8);
+        }
+
+        public static string StrToBase4String(string str, Encoding encode)
+        {
+            byte[] bs = encode.GetBytes(str);
+            return  Convert.ToBase64String(bs);
+        }
+
         public static string ToTitleCase(object obj)
         {
             if (obj == null)
@@ -200,31 +211,31 @@ namespace Common.Utils
         }
 
         // List<String> => String
-        static string ConvertListToString(List<string> strList)
+        public static string ConvertListToString(List<string> strList)
         {
             return String.Join(",", strList);
         }
 
         //List<string>  => List<int>
-        static List<int> ConvertStrListToIntList(List<string> strList)
+        public static List<int> ConvertStrListToIntList(List<string> strList)
         {
             return strList.Select(int.Parse).ToList();
         }
 
         //String[] => int[]
-        static int[] ConvertStrArrayToIntArray(string[] strs)
+        public static int[] ConvertStrArrayToIntArray(string[] strs)
         {
             return Array.ConvertAll(strs, id => Convert.ToInt32(id));
         }
 
         // int[] => String
-        static string ConvertArrayToString(int[] idList)
+        public static string ConvertArrayToString(int[] idList)
         {
             return string.Join(",", Array.ConvertAll<int, string>(idList, delegate(int i) { return i.ToString(); }));
         }
 
         //string => char[]
-        static char[] ConverToChars(string str)
+        public static char[] ConverToChars(string str)
         {
             return str.ToCharArray();
         }
