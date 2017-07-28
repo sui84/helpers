@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 using System.Collections;
 using System.Reflection;
 
-namespace Common.Utils
+namespace Common.Utils.DB
 {
     public static class DataTableHelper
     {

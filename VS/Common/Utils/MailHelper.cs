@@ -6,6 +6,7 @@ using System.Net.Mail;
 using LumenWorks.Framework.IO.Csv;
 using System.Collections.Generic;
 using System.Reflection;
+using Common.Utils.Log;
 
 namespace Common.Utils{
 

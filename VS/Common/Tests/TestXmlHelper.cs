@@ -7,6 +7,8 @@ using System.Xml.Serialization;
 using System.Xml;
 using System.IO;
 using Common.Utils;
+using Common.Utils.Tibco;
+using Common.Utils.Files;
 
 namespace Common.Tests
 {

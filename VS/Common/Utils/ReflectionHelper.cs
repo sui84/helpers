@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Data.Linq.Mapping;
 using System.Text;
+using Common.Utils.Log;
 
 namespace Common.Utils
 {

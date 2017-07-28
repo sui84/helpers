@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Common.Utils;
-using Common.Packets.Utils;
-using Common.Utils.Packets;
+using Common.Utils.Network;
 
 namespace Common.Tests
 {

@@ -8,6 +8,7 @@ using System.Data;
 using ClosedXML.Excel;
 using ExcelLibrary.SpreadSheet;
 using Common.Utils.Files;
+using Common.Utils.DB;
 
 namespace Common.Tests
 {

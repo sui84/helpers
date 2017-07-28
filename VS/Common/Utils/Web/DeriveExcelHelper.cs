@@ -7,6 +7,7 @@ using System.Text;
 using System.Web;
 using Common.Utils;
 using Newtonsoft.Json;
+using Common.Utils.ConvertType;
 
 namespace Common.Utils.Web
 {

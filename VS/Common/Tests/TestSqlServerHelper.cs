@@ -9,6 +9,8 @@ using Microsoft.SqlServer.Management.Smo;
 using Microsoft.SqlServer.Management;
 using System.Data;
 using System.Threading;
+using Common.Utils.DB;
+using Common.Utils.ConvertType;
 
 namespace Common.Tests
 {

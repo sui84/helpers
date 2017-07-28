@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Reflection;
 using System.Collections.Concurrent;
 using Common.Utils;
+using Common.Utils.Log;
 
 namespace Common.Tests
 {

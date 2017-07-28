@@ -5,7 +5,7 @@ using System.Text;
 using System.Reflection;
 using System.Data;
 
-namespace Common.Utils
+namespace Common.Utils.DB
 {
     public class DataTableCreator<T>
     {
