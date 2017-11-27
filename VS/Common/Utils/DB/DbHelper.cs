@@ -182,6 +182,36 @@ namespace Common.Utils.DB
         {
             ExecuteCommand(string.Format("delete from {0} {1}", tbName, conStr), connStr);
         }
+        
+                public string CompanyTable(DataTable dt1, DataTable dt2)
+        {
+            string str = string.Empty;
+            for( int i =0;i< dt1.Rows.Count ;i++){
+                foreach (DataColumn dcol in dt1.Columns)
+                {
+                    string col = dcol.ColumnName;
+                    if (dt2.Rows.Count <= i){
+                        str += string.Format("Row {0} Column {1} : {2} NULL \r\n",i, col,dt1.Rows[i][col]);
+                    }
+                    else{
+                        if (dt1.Rows[i][col].ToString() != dt2.Rows[i][col].ToString()){
+                            str += string.Format("Row {0} Column {1} : {2} {3} \r\n", i, col,dt1.Rows[i][col], dt2.Rows[i][col]);
+                        }
+                    }
+                }
+            }
+            if (dt2.Rows.Count > dt1.Rows.Count)
+            {
+                for (int i = dt1.Rows.Count ; i < dt2.Rows.Count; i++)
+                {
+                    foreach (DataColumn col in dt2.Columns)
+                    {
+                        str += string.Format("Row {0} Column {1} : NULL {2} \r\n", i, col,dt2.Rows[i][col]);
+                    }
+                }
+            }
+            return str;
+        }
 
         public void CopyData(DataTable SourceData, string tbName, string connStr, string[][] mapCols = null)
         {
