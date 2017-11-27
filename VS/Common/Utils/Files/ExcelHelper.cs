@@ -10,11 +10,78 @@ using System.IO;
 using OfficeOpenXml;
 using System.Data;
 using System.Data.OleDb;
+using Excel;
 
 namespace Common.Utils.Files
 {
     public class ExcelHelper
     {
+       // ExcelDataReader.2.1.2.3
+        public  DataSet ExcelToDataSet(string fileName)
+        {
+
+            DataSet dsUnUpdated = new DataSet();
+            try
+            {
+                IExcelDataReader iExcelDataReader = null;
+                FileInfo fileInfo = new FileInfo(fileName);
+                string file = fileInfo.Name;
+                FileStream fileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                if (file.Split('.')[1].Equals("xls"))
+                {
+                    iExcelDataReader = ExcelReaderFactory.CreateBinaryReader(fileStream);
+                }
+                else if (file.Split('.')[1].Equals("xlsx"))
+                {
+                    iExcelDataReader = ExcelReaderFactory.CreateOpenXmlReader(fileStream);
+                }
+                iExcelDataReader.IsFirstRowAsColumnNames = true;
+                dsUnUpdated = iExcelDataReader.AsDataSet(true);
+                iExcelDataReader.Close();
+            }
+            catch (Exception ex)
+            {
+                
+            }
+            return dsUnUpdated;
+        }
+    
+        /// <summary>
+        /// Use OLEDb to convert Excel to Dataset
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        public  DataSet OledbExceltoDataSet(string fileName)
+        {
+            DataSet ds = new DataSet();
+            string connectionString = "";
+            string ExcelSheet = "Sheet1";
+            try
+            {
+                if (fileName.EndsWith(".xls"))
+                {
+                    connectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + fileName + ";" + "Extended Properties='Excel 8.0;HDR=YES;TypeGuessRows=0'";
+                }
+                else if (fileName.EndsWith(".xlsx"))
+                {
+                    connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + fileName + ";" + "Extended Properties='Excel 12.0 Xml;HDR=YES;TypeGuessRows=0'";
+                }
+
+                using (OleDbConnection con = new OleDbConnection(connectionString))
+                {
+                    con.Open();
+                    OleDbDataAdapter odb = new OleDbDataAdapter("select * from [" + ExcelSheet + "$]", con);
+                    odb.Fill(ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                
+            }
+            return ds;
+
+        }
+        
         public ArrayList ConvertExcelToArrayList(string colName, string sheetName, string UploadPath, bool skipLastRecord)
         {
             colName = colName.Trim();
