@@ -123,7 +123,13 @@ private  readonly string DefaultUserAgent = "Mozilla/4.0 (compatible; MSIE 6.0; 
                     stream.Write(data, 0, data.Length);
                 }
             }
-            return request.GetResponse() as HttpWebResponse;
+            Stream respStream = request.GetResponse().GetResponseStream();
+            string text = string.Empty;
+            using (System.IO.StreamReader reader = new System.IO.StreamReader(respStream, Encoding.GetEncoding("UTF-8")))
+            {
+                text = reader.ReadToEnd();
+            }
+            return text;
         }
 
         private static bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
