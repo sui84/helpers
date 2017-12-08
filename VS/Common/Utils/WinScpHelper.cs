@@ -6,62 +6,60 @@ using WinSCP;
 using System.Data;
 using System.IO;
 
-namespace Common.Utils
+namespace Common.utils
 {
     public class WinScpHelper
     {
-        public string FtpUrl {get;set;}
-        public string FtpHost { get; set; }
-        public int PortNumber { get; set; }
-        public string FtpUsername { get; set; }
-        public string FtppPassword { get; set; }
-        public string FtpSSHFingerPrint { get; set; }
-        public string SshPrivateKeyPath { get; set; } 
+        private string FtpUrl { get; set; }
+        private string FtpHost { get; set; }
+        private int PortNumber { get; set; }
+        private string FtpUsername { get; set; }
+        private string FtppPassword { get; set; }
+        private string FtpSSHFingerPrint { get; set; }
+        private string SshPrivateKeyPath { get; set; }
+        private SessionOptions SessionOptions { get; set; }
+        private string LogPath { get; set; }
 
 
-        public WinScpHelper(string host,string username,string fingerprint,string pkeypath)
+        public WinScpHelper(string host, string username, string password, string fingerprint, string pkeypath, string logpath)
         {
             this.FtpHost = host;
             this.FtpUsername = username;
-            this.FtppPassword = string.Empty;
+            this.FtppPassword = password;
             this.FtpSSHFingerPrint = fingerprint;
             this.SshPrivateKeyPath = pkeypath;
-            this.PortNumber = 21;
-            
+            this.PortNumber = 22;
+            this.SessionOptions = new SessionOptions
+            {
+                Protocol = Protocol.Sftp,
+                HostName = this.FtpHost,
+                UserName = this.FtpUsername,
+                Password = this.FtppPassword,
+                PortNumber = this.PortNumber,
+                SshHostKeyFingerprint = this.FtpSSHFingerPrint,
+                SshPrivateKeyPath = this.SshPrivateKeyPath,
+
+            };
+            this.LogPath = logpath;
+
         }
 
-
-        public  void Download(string ftpdir , string localdir)
+        public List<string> GetFileList(string ftpdir)
         {
+            List<string> files = new List<string>();
             try
-            {              
-                SessionOptions sessionOptions = new SessionOptions
-                {
-                    Protocol = Protocol.Sftp,
-                    HostName = this.FtpHost,
-                    UserName = this.FtpUsername,
-                    // Password = this.FtppPassword,
-                    PortNumber = this.PortNumber,
-                    SshHostKeyFingerprint = this.FtpSSHFingerPrint,
-                    SshPrivateKeyPath = this.SshPrivateKeyPath,
-                };
-
+            {
                 using (Session session = new Session())
                 {
-                    session.SessionLogPath = "";
-                    session.Open(sessionOptions);
+
+                    session.SessionLogPath = this.LogPath;
+                    session.Open(this.SessionOptions);
                     RemoteDirectoryInfo directory = session.ListDirectory(ftpdir);
                     foreach (RemoteFileInfo fileInfo in directory.Files)
                     {
-                        if(fileInfo.Name != ".."){
-                            TransferOptions transferOptions = new TransferOptions();
-                            transferOptions.TransferMode = TransferMode.Binary;
-                            transferOptions.FilePermissions = null;
-                            transferOptions.PreserveTimestamp = false;
-                            transferOptions.ResumeSupport.State = TransferResumeSupportState.Off;
-                            TransferOperationResult transferResult;
-                            transferResult = session.GetFiles(ftpdir + fileInfo.Name, localdir, false, transferOptions);
-                            transferResult.Check();
+                        if (fileInfo.Name != "..")
+                        {
+                            files.Add(fileInfo.Name);
                         }
                     }
                 }
@@ -70,37 +68,98 @@ namespace Common.Utils
             {
                 string str = ex.Message + ex.StackTrace;
             }
+            return files;
+
+        }
+
+        public string GetLastestFileList(string ftpdir, string fileFilter)
+        {
+            string fileName = string.Empty;
+            using (Session session = new Session())
+            {
+                session.Open(this.SessionOptions);
+                //RemoteDirectoryInfo directory = session.ListDirectory(ftpdir);
+                var q = session.EnumerateRemoteFiles(ftpdir, "", EnumerationOptions.None);
+                fileName = q.Where(o=>o.Name.StartsWith(fileFilter)).OrderByDescending(o => o.LastWriteTime).FirstOrDefault().ToString();
+                //DateTime latesttime = DateTime.MinValue;
+                //foreach (RemoteFileInfo fileInfo in directory.Files)
+                //{
+                //    if (fileInfo.Name != ".." && fileInfo.Name.StartsWith(fileFilter))
+                //    {
+                //        if (fileInfo.LastWriteTime > latesttime){
+                //            latesttime = fileInfo.LastWriteTime;
+                //            fileName = fileInfo.Name;
+                //        }
+                //    }
+                //}
+            }
+            return fileName;
         }
 
 
-        public bool UploadFile(string sourcefilepath, string ftpdir)
+        public bool Download(string ftpdir, string filename, string localdir)
         {
             bool success = false;
             try
             {
-                SessionOptions sessionOptions = new SessionOptions
+                using (Session session = new Session())
                 {
-                    Protocol = Protocol.Sftp,
-                    HostName = this.FtpHost,
-                    UserName = this.FtpUsername,
-                    // Password = this.FtppPassword,
-                    PortNumber = this.PortNumber,
-                    SshHostKeyFingerprint = this.FtpSSHFingerPrint,
-                    SshPrivateKeyPath = this.SshPrivateKeyPath,
-                };
 
-                string ftpfullpath = ftpdir + Path.GetFileName(sourcefilepath);
+                    session.SessionLogPath = this.LogPath;
+                    session.Open(this.SessionOptions);
+                    RemoteDirectoryInfo directory = session.ListDirectory(ftpdir);
+                    foreach (RemoteFileInfo fileInfo in directory.Files)
+                    {
+                        if (String.IsNullOrEmpty(filename) || (!String.IsNullOrEmpty(filename) && filename == fileInfo.Name))
+                        {
+                            if (fileInfo.Name != "..")
+                            {
+                                TransferOptions transferOptions = new TransferOptions();
+                                transferOptions.TransferMode = TransferMode.Binary;
+                                transferOptions.FilePermissions = null;
+                                transferOptions.PreserveTimestamp = false;
+                                transferOptions.ResumeSupport.State = TransferResumeSupportState.Off;
+                                TransferOperationResult transferResult;
+                                transferResult = session.GetFiles(string.Format("{0}/{1}", ftpdir, fileInfo.Name), localdir, false, transferOptions);
+                                transferResult.Check();
+                            }
+                        }
+                    }
+                    success = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                string str = ex.Message + ex.StackTrace;
+                success = false;
+            }
+            return success;
+        }
+
+        public bool UploadFile(string sourceFilePath, string descFilepath)
+        {
+            bool success = false;
+            try
+            {
 
                 using (Session session = new Session())
                 {
                     // Connect
-                    session.Open(sessionOptions);
+                    session.SessionLogPath = this.LogPath;
+                    session.Open(this.SessionOptions);
 
                     // Upload files
                     TransferOptions transferOptions = new TransferOptions();
                     transferOptions.TransferMode = TransferMode.Binary;
 
-                    TransferOperationResult transferResult = session.PutFiles(sourcefilepath, ftpfullpath, false, transferOptions);
+                    string[] dirs = Path.GetDirectoryName(descFilepath).Split('/').Where(o => o.ToString().Length > 0).ToArray();
+                    string dirpath = "/";
+                    for (int i = 0; i < dirs.Count(); i++)
+                    {
+                        dirpath += dirs[i] + '/';
+                        if (!session.FileExists(dirpath)) session.CreateDirectory(dirpath);
+                    }
+                    TransferOperationResult transferResult = session.PutFiles(sourceFilePath, Path.GetFileName(descFilepath), false, transferOptions);
 
                     // Throw on any error
                     transferResult.Check();
@@ -113,9 +172,9 @@ namespace Common.Utils
                 }
 
                 // Delete the file after uploading
-                if (File.Exists(sourcefilepath))
+                if (File.Exists(sourceFilePath))
                 {
-                    File.Delete(sourcefilepath);
+                    File.Delete(sourceFilePath);
                 }
             }
             catch (Exception ex)
@@ -125,6 +184,6 @@ namespace Common.Utils
             return success;
         }
 
-      
+
     }
 }
