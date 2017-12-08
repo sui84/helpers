@@ -44,6 +44,23 @@ namespace Common.Tests
             try
             {
 
+                string servername = "localhost";
+                string username = "sa";
+                string password = "password";
+                string saveserver = "localhost";
+                string savedb = "test";
+                SqlServerHelper sshelper = new SqlServerHelper();
+                ConnStrHelper connhelper = new ConnStrHelper();
+
+                ScriptedObject so = new ScriptedObject();
+                Table ScriptedObject = sshelper.CreateTable(saveserver, savedb, username, password, so.GetType(), false);
+                string cstr = connhelper.GetMSSQLClientConnStr(saveserver, savedb);
+                List<ScriptedObject> srcs = sshelper.GenerateScripts(servername, username, password, "testdb1");
+                DataTableHelper.BulkCopyToDatabase(srcs.AsEnumerable(), so.GetType().Name, cstr, 9000);
+                List<ScriptedObject> dsts = sshelper.GenerateScripts(servername, username, password, "testdb2");
+                DataTableHelper.BulkCopyToDatabase(dsts.AsEnumerable(), so.GetType().Name, cstr, 9000);
+                string resultstr = sshelper.CompareScriptes(srcs, dsts);
+                
                 SqlServerHelper sshelper = new SqlServerHelper();
 
                 testtb t1 = new testtb();
