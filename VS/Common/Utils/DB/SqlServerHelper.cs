@@ -11,14 +11,113 @@ using System.Reflection;
 using System.Collections;
 using System.Collections.Specialized;
 using System.Data.SqlClient;
-using Common.Utils.Log;  
-
+using Microsoft.SqlServer.Management.Sdk.Sfc;
+using Common.Utils;  
 //Microsoft.SqlServer.ConnectionInfo.dll
 //Microsoft.SqlServer.Management.Sdk.Sfc.dll
+
 namespace Common.Utils.DB
 {
+     public class ScriptedObject
+    {
+         public string Database { get; set; }
+         public string NameType { get; set; }
+         public string Script { get; set; }
+         public DateTime CreateDate { get; set; }
+         public DateTime DateLastModified { get; set; }
+         public Urn Urn { get; set; }
+         public long RowCount { get; set; }
+         public double DataSpaceUsed { get; set; }
+        
+    }
+
     public class SqlServerHelper
     {
+        public string CompareScriptes(List<ScriptedObject> srcs, List<ScriptedObject> dsts)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("Only exists in destinatioin:");
+            foreach (string line in dsts.Where(o => !srcs.Select(o1 => o1.NameType).Contains(o.NameType)).Select(o => o.NameType))
+            {
+                sb.AppendLine(line);
+            }
+            sb.AppendLine("Only exists in source:");
+            foreach (string line in srcs.Where(o => !dsts.Select(o1 => o1.NameType).Contains(o.NameType)).Select(o => o.NameType))
+            {
+                sb.AppendLine(line);
+            }
+            sb.AppendLine("Different Script:");
+            foreach (ScriptedObject src in srcs){
+                ScriptedObject dst = dsts.Where(o => o.NameType == src.NameType).FirstOrDefault();
+                if (dst != null)
+                {
+                    if (src.Script != dst.Script)
+                    {
+                        sb.AppendLine(src.NameType);
+                        //sb.AppendLine(src.Database);
+                        //sb.AppendLine(src.Script);
+                        //sb.AppendLine(dst.Database);
+                        //sb.AppendLine(dst.Script);
+                    }
+                }
+            }
+            return sb.ToString();
+        }
+
+        public List<ScriptedObject> GenerateScripts(string server, string user, string password, string dbname)
+        {
+            Server srv = new Server(new ServerConnection(server,user,password));
+            Database db = srv.Databases[dbname];
+            List<ScriptedObject> sobjs = new List<ScriptedObject>();
+            foreach (Table obj in db.Tables)
+            {
+                if (obj.IsSystemObject) continue;
+                ScriptedObject scriptedObj = new ScriptedObject();
+                scriptedObj.Database = dbname;
+                scriptedObj.NameType = obj.GetType().Name + '.' + obj.Name;
+                scriptedObj.Urn = obj.Urn;
+                foreach (string sline in obj.Script())
+                {
+                    scriptedObj.Script += sline.Trim().TrimEnd((char[])"/r/n".ToCharArray())+"\r\n";
+                }
+                scriptedObj.RowCount = obj.RowCount;
+                scriptedObj.CreateDate = obj.CreateDate;
+                scriptedObj.DateLastModified = obj.DateLastModified;
+                scriptedObj.DataSpaceUsed = obj.DataSpaceUsed;
+                sobjs.Add(scriptedObj);
+                
+            }
+            foreach (StoredProcedure  obj in db.StoredProcedures)
+            {
+                if (obj.IsSystemObject) continue;
+                ScriptedObject scriptedObj = new ScriptedObject();
+                scriptedObj.Database = dbname;
+                scriptedObj.NameType = obj.GetType().Name + '.' + obj.Name;
+                scriptedObj.Urn = obj.Urn;
+                scriptedObj.Script = string.Format("{0}\r\n{1}", obj.TextHeader.Trim().TrimEnd((char[])"/r/n".ToCharArray()), obj.TextBody.Trim().TrimEnd((char[])"/r/n".ToCharArray()));
+                sobjs.Add(scriptedObj);
+                scriptedObj.CreateDate = obj.CreateDate;
+                scriptedObj.DateLastModified = obj.DateLastModified;
+                sobjs.Add(scriptedObj);
+            }
+            foreach (View obj in db.Views)
+            {
+                if (obj.IsSystemObject) continue;
+                ScriptedObject scriptedObj = new ScriptedObject();
+                scriptedObj.Database = dbname;
+                scriptedObj.NameType = obj.GetType().Name + '.' + obj.Name;
+                scriptedObj.Urn = obj.Urn;
+                scriptedObj.Script = string.Format("{0}\r\n{1}", obj.TextHeader.Trim().TrimEnd((char[])"/r/n".ToCharArray()), obj.TextBody.Trim().TrimEnd((char[])"/r/n".ToCharArray()));
+                sobjs.Add(scriptedObj);
+                scriptedObj.CreateDate = obj.CreateDate;
+                scriptedObj.DateLastModified = obj.DateLastModified;
+                sobjs.Add(scriptedObj);
+            }
+            return sobjs;
+          
+        }
+
+
         public ServerConnection GetServer(string serverName, string userName, string password)
         {
             Server s = new Server(serverName);
