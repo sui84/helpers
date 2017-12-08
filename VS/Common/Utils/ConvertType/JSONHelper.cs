@@ -5,6 +5,8 @@ using System.Text;
 using Newtonsoft.Json;
 using System.Data;
 using System.Text.RegularExpressions;
+using System.IO;
+using System.Runtime.Serialization.Json;
 
 namespace Common.Utils.ConvertType
 {
@@ -83,6 +85,14 @@ namespace Common.Utils.ConvertType
         public static T JsonToEntity<T>(this string Json)
         {
             return JsonConvert.DeserializeObject<T>(Json);
+        }
+        
+        public static T JSONToObject<T>(string jsonString)
+        {
+            using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(jsonString)))
+            {
+                return (T)new DataContractJsonSerializer(typeof(T)).ReadObject(ms);
+            }
         }
     }
 }
