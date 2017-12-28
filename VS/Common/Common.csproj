@@ -31,7 +31,7 @@
     <RootNamespace>Common</RootNamespace>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Common.Tests.TestPacketHelper</StartupObject>
+    <StartupObject>Common.Tests.TestJarHelper</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ClosedXML">
@@ -44,11 +44,32 @@
     <Reference Include="EPPlus">
       <HintPath>..\Libraries\EPPlus.dll</HintPath>
     </Reference>
+    <Reference Include="Excel">
+      <HintPath>..\Libraries\Excel.dll</HintPath>
+    </Reference>
     <Reference Include="ExcelLibrary">
       <HintPath>..\Libraries\ExcelLibrary.dll</HintPath>
     </Reference>
     <Reference Include="fastJSON">
       <HintPath>..\Libraries\fastJSON.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.ClassLibrary">
+      <HintPath>..\Libraries\IKVM\IKVM.OpenJDK.ClassLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Core, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\IKVM\IKVM.OpenJDK.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.Runtime, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\IKVM\IKVM.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.Runtime.JNI, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\IKVM\IKVM.Runtime.JNI.dll</HintPath>
+    </Reference>
+    <Reference Include="jt400">
+      <HintPath>..\Libraries\jt400.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\Libraries\log4net.dll</HintPath>
@@ -194,6 +215,7 @@
     <Compile Include="Models\TestModel.cs" />
     <Compile Include="Tests\TestCacheHelper.cs" />
     <Compile Include="Tests\TestExcelHelper.cs" />
+    <Compile Include="Tests\TestJarHelper.cs" />
     <Compile Include="Tests\TestLogHelper.cs" />
     <Compile Include="Tests\TestPacketHelper.cs" />
     <Compile Include="Tests\TestSecurityHelper.cs" />

@@ -61,7 +61,7 @@ namespace Common.Tests
                 DataTableHelper.BulkCopyToDatabase(dsts.AsEnumerable(), so.GetType().Name, cstr, 9000);
                 string resultstr = sshelper.CompareScriptes(srcs, dsts);
                 
-                SqlServerHelper sshelper = new SqlServerHelper();
+                //SqlServerHelper sshelper = new SqlServerHelper();
 
                 testtb t1 = new testtb();
                 t1.Int1 = int.MaxValue;
@@ -79,10 +79,10 @@ namespace Common.Tests
                 t1.Double1 = double.MaxValue;
                 t1.String1 = "你好ssadsa";
                 t1.Char1 = '9';
-                string servername = @"localhost";
+                //string servername = @"localhost";
                 string dbname = "TEST";
-                string username = "sa";
-                string password = "password";
+                //string username = "sa";
+                //string password = "password";
                 //ValueTypeHelper.IsNullable(t1.Int1);
                 t1.Int5 = 111;
                 ValueTypeHelper.IsNullable(t1.Int5);
@@ -90,7 +90,7 @@ namespace Common.Tests
 
                 Table tb = sshelper.CreateTable(servername, dbname, username, password, t1.GetType(), true);
                 tb.Script();
-                ConnStrHelper connhelper = new ConnStrHelper();
+                //ConnStrHelper connhelper = new ConnStrHelper();
                 string connStr = connhelper.GetMSSQLClientConnStr(servername, dbname, username, password);
 
                 testtb t2 = new testtb();

@@ -18,7 +18,7 @@ namespace Common.Utils
         {
             using (System.Data.SqlClient.SqlConnection conn = new System.Data.SqlClient.SqlConnection())
             {
-                conn.ConnectionString = "Data Source=WITDTRM019;Initial Catalog=dbLogTest;Integrated Security=True";
+                conn.ConnectionString = "Data Source=localhost;Initial Catalog=dbLogTest;Integrated Security=True";
                 conn.Open();
                 using (System.Data.SqlClient.SqlCommand command = conn.CreateCommand())
                 {

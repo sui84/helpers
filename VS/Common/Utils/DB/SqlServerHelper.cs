@@ -12,7 +12,8 @@ using System.Collections;
 using System.Collections.Specialized;
 using System.Data.SqlClient;
 using Microsoft.SqlServer.Management.Sdk.Sfc;
-using Common.Utils;  
+using Common.Utils;
+using Common.Utils.Log;  
 //Microsoft.SqlServer.ConnectionInfo.dll
 //Microsoft.SqlServer.Management.Sdk.Sfc.dll
 

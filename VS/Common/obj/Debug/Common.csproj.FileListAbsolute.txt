@@ -78,3 +78,10 @@ E:\MyProjects\Github\helpers\VS\Common\bin\Debug\Common.exe
 E:\MyProjects\Github\helpers\VS\Common\bin\Debug\Common.pdb
 E:\MyProjects\Github\helpers\VS\Common\obj\Debug\Common.exe
 E:\MyProjects\Github\helpers\VS\Common\obj\Debug\Common.pdb
+E:\MyProjects\Github\helpers\VS\Common\bin\Debug\Excel.dll
+E:\MyProjects\Github\helpers\VS\Common\bin\Debug\Excel.pdb
+E:\MyProjects\Github\helpers\VS\Common\bin\Debug\IKVM.OpenJDK.ClassLibrary.dll
+E:\MyProjects\Github\helpers\VS\Common\bin\Debug\IKVM.OpenJDK.Core.dll
+E:\MyProjects\Github\helpers\VS\Common\bin\Debug\IKVM.Runtime.dll
+E:\MyProjects\Github\helpers\VS\Common\bin\Debug\IKVM.Runtime.JNI.dll
+E:\MyProjects\Github\helpers\VS\Common\bin\Debug\jt400.dll
