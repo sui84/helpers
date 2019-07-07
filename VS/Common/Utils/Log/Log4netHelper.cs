@@ -27,6 +27,12 @@ namespace Common.Utils.Log
         {
             this.logger.Info(message);
         }
+
+        public void InfoWithTime(object message)
+        {
+            this.logger.InfoFormat("[{0} {1}] {2}",DateTime.Now.ToLongDateString(),DateTime.Now.ToLongTimeString(), message);
+        }
+
         public void Warn(object message)
         {
             this.logger.Warn(message);

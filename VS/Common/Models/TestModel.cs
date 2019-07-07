@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Common.Models
 {
+    /*
     public class TestModel : IValidatableObject
     {
         [Required]
@@ -118,4 +119,5 @@ namespace Common.Models
         //        }                    
 
     }
+     * */
 }

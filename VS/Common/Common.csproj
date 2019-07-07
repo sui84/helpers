@@ -4,7 +4,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{58C5DB32-7252-4D61-A347-1B52C9A27605}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
     <AssemblyName>Common</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
@@ -31,7 +31,8 @@
     <RootNamespace>Common</RootNamespace>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Common.Tests.TestJarHelper</StartupObject>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ClosedXML">
@@ -217,7 +218,6 @@
     <Compile Include="Tests\TestExcelHelper.cs" />
     <Compile Include="Tests\TestJarHelper.cs" />
     <Compile Include="Tests\TestLogHelper.cs" />
-    <Compile Include="Tests\TestPacketHelper.cs" />
     <Compile Include="Tests\TestSecurityHelper.cs" />
     <Compile Include="Tests\TestSocketHelper.cs" />
     <Compile Include="Tests\TestSqlServerHelper.cs" />
@@ -241,11 +241,25 @@
     <Compile Include="Utils\Network\HttpHeaderHelper.cs" />
     <Compile Include="Utils\Network\HttpHelper.cs" />
     <Compile Include="Utils\Network\IcmpHelper.cs" />
-    <Compile Include="Utils\Network\PacketHelper.cs" />
     <Compile Include="Utils\Network\ScanPortHelper.cs" />
     <Compile Include="Utils\Network\SocketHelper.cs" />
     <Compile Include="Utils\Network\SocketSmtpHelper.cs" />
     <Compile Include="Utils\ConvertType\PinyinHelper.cs" />
+    <Compile Include="Utils\Ntfs\FileAndDirectoryEntry.cs" />
+    <Compile Include="Utils\Ntfs\FileQueryEngine.cs" />
+    <Compile Include="Utils\Ntfs\FrnFilePath.cs" />
+    <Compile Include="Utils\Ntfs\MFTScanner.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Ntfs\NtfsUsnJournal.cs" />
+    <Compile Include="Utils\Ntfs\TestNtfs.cs" />
+    <Compile Include="Utils\Ntfs\UsnControlCode.cs" />
+    <Compile Include="Utils\Ntfs\UsnEntry.cs" />
+    <Compile Include="Utils\Ntfs\UsnErrorCode.cs" />
+    <Compile Include="Utils\Ntfs\UsnJournalData.cs" />
+    <Compile Include="Utils\Ntfs\UsnJournalHelper.cs" />
+    <Compile Include="Utils\Ntfs\UsnOperator.cs" />
+    <Compile Include="Utils\Ntfs\Win32Api.cs" />
     <Compile Include="Utils\RandomHelper.cs" />
     <Compile Include="Utils\RegexHelper.cs" />
     <Compile Include="Utils\RemoteConnectorHelper.cs" />
@@ -291,7 +305,6 @@
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="App.Config" />
     <EntityDeploy Include="Data\PacketDB.edmx">
@@ -301,18 +314,11 @@
     <Compile Include="Utils\Security\ImpersonatorHelper.cs" />
     <None Include="ClassDiagram1.cd" />
     <None Include="ClassDiagram2.cd" />
-    <None Include="Configs\log4net.config" />
+    <Content Include="Configs\log4net.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Utils\WindowsIdentityUtilHelper.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PacketDotNet-0.11.0.src\PacketDotNet\PacketDotNet.csproj">
-      <Project>{55ABBA4C-AAF9-4726-A592-0C92436CEC92}</Project>
-      <Name>PacketDotNet</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SharpPcap\SharpPcap.csproj">
-      <Project>{24262E52-1304-4A25-8F73-A3B06E40592E}</Project>
-      <Name>SharpPcap</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="SQL\packet.sql" />
