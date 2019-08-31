@@ -31,7 +31,7 @@ namespace Common.Utils.Ntfs
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        private struct USN_RECORD
+        public struct USN_RECORD
         {
             public int RecordLength;
             public short MajorVersion;

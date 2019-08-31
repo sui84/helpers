@@ -149,19 +149,21 @@ namespace Common.Utils.Ntfs
              NtfsUsnJournal.UsnJournalReturnCode rtnCode = _usnJournal.GetUsnJournalEntries(_usnCurrentJournalState, reasonMask, out usnEntries, out _usnCurrentJournalState);
              if (rtnCode == NtfsUsnJournal.UsnJournalReturnCode.USN_JOURNAL_SUCCESS && usnEntries.Count >0)
              {
-                 List<FileAndDirectoryEntry> ues = FileQueryEngine.GetAllFileEntrys(_volume);
+                 //List<FileAndDirectoryEntry> ues = FileQueryEngine.GetAllFileEntrys(_volume);
                  foreach (Win32Api.UsnEntry usnEntry in usnEntries)
                  {
                      FileChange pfc = fcs.Where(o=>o.FileReferenceNumber == usnEntry.FileReferenceNumber).FirstOrDefault();
                      if (pfc == null)
                      {
-                         FileAndDirectoryEntry ue = ues.Where(o => o.FileReferenceNumber == usnEntry.FileReferenceNumber).FirstOrDefault();
+                         //FileAndDirectoryEntry ue = ues.Where(o => o.FileReferenceNumber == usnEntry.FileReferenceNumber).FirstOrDefault();
+                         string path = String.Empty;
+                         _usnJournal.GetPathFromFileReference(usnEntry.FileReferenceNumber,out path);
                          FileChange fc = new FileChange
                          {
                              FileName = usnEntry.Name
                              ,FileReferenceNumber = usnEntry.FileReferenceNumber
                              ,ChangeType = GetChangeType(usnEntry.Reason)
-                             ,FilePath = (ue == null) ? String.Empty : ue.Path
+                             ,FilePath = path
                              ,IsFile = usnEntry.IsFile
                              ,ChangeDate = DateTime.FromFileTime(usnEntry.ChangeDateTime)
                          };

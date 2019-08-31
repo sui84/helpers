@@ -24,8 +24,14 @@ namespace Common.Utils.Utfs
 
 
                // List<string> files = new MFTScanner().EnumerateFiles("E:").ToList();
-                UsnJournalHelper ujhelper = new UsnJournalHelper("E:");
-               ujhelper.ViewUsnChanges();
+              //  UsnJournalHelper ujhelper = new UsnJournalHelper("E:");
+              // ujhelper.ViewUsnChanges();
+
+                NtfsUsnJournal usnJournal = new NtfsUsnJournal(di);
+               // bool active = usnJournal.IsUsnJournalActive();
+
+                MFTScanner scanner = new MFTScanner();
+                List<string> strs = scanner.EnumerateFiles("E:").ToList();
             }
             catch (Exception ex)
             {

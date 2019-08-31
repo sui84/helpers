@@ -1099,6 +1099,35 @@ namespace Common.Utils.Utfs
             return usnReturnCode;
         }
 
+/*
+        private void GetUsnJournal()
+        {
+            UsnJournalReturnCode usnReturnCode = UsnJournalReturnCode.USN_JOURNAL_SUCCESS;
+            //int sizeUsnJournalState = Marshal.SizeOf(usnJournalState);
+            
+            UInt32 cb;
+            Win32Api.USN_JOURNAL_DATA usnJournalState = new Win32Api.USN_JOURNAL_DATA();
+            int sizeUsnJournalState = Marshal.SizeOf(usnJournalState);
+
+            bool fOk = Win32Api.DeviceIoControl(
+                _usnJournalRootHandle,
+                Win32Api.FSCTL_QUERY_USN_JOURNAL,
+                IntPtr.Zero,
+                0,
+                out usnJournalState,
+                sizeUsnJournalState,
+                out cb,
+                IntPtr.Zero);
+
+            if (!fOk)
+            {
+                int lastWin32Error = Marshal.GetLastWin32Error();
+                usnReturnCode = ConvertWin32ErrorToUsnError((Win32Api.GetLastErrorEnum)Marshal.GetLastWin32Error());
+            }
+
+           
+        }
+        */
         #endregion
 
         #region IDisposable Members

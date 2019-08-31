@@ -38,7 +38,6 @@ E:\MyProjects\Github\byme\helpers\VS\CommonWindowsService\bin\Debug\Configs\log4
 E:\MyProjects\Github\byme\helpers\VS\CommonWindowsService\bin\Debug\CommonWindowsService.exe.config
 E:\MyProjects\Github\byme\helpers\VS\CommonWindowsService\bin\Debug\CommonWindowsService.exe
 E:\MyProjects\Github\byme\helpers\VS\CommonWindowsService\bin\Debug\CommonWindowsService.pdb
-E:\MyProjects\Github\byme\helpers\VS\CommonWindowsService\bin\Debug\Common.dll
 E:\MyProjects\Github\byme\helpers\VS\CommonWindowsService\bin\Debug\TIBCO.EMS.dll
 E:\MyProjects\Github\byme\helpers\VS\CommonWindowsService\bin\Debug\log4net.dll
 E:\MyProjects\Github\byme\helpers\VS\CommonWindowsService\bin\Debug\Microsoft.Practices.Unity.dll
@@ -73,3 +72,4 @@ E:\MyProjects\Github\byme\helpers\VS\CommonWindowsService\bin\Debug\Microsoft.Pr
 E:\MyProjects\Github\byme\helpers\VS\CommonWindowsService\obj\x86\Debug\CommonWindowsService.csprojResolveAssemblyReference.cache
 E:\MyProjects\Github\byme\helpers\VS\CommonWindowsService\obj\x86\Debug\CommonWindowsService.exe
 E:\MyProjects\Github\byme\helpers\VS\CommonWindowsService\obj\x86\Debug\CommonWindowsService.pdb
+E:\MyProjects\Github\byme\helpers\VS\CommonWindowsService\bin\Debug\Common.exe

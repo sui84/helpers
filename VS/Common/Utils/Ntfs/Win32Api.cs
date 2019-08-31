@@ -89,6 +89,8 @@ namespace Common.Utils.Utfs
         #endregion
 
         #region constants
+        public const int USN_PAGE_SIZE = 0x1000;
+
         public const Int32 INVALID_HANDLE_VALUE = -1;
 
         public const UInt32 GENERIC_READ = 0x80000000;

@@ -4,7 +4,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{58C5DB32-7252-4D61-A347-1B52C9A27605}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
     <AssemblyName>Common</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
@@ -31,8 +31,7 @@
     <RootNamespace>Common</RootNamespace>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>
-    </StartupObject>
+    <StartupObject>Common.Utils.Regedit.TestRegedit</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ClosedXML">
@@ -261,6 +260,8 @@
     <Compile Include="Utils\Ntfs\UsnOperator.cs" />
     <Compile Include="Utils\Ntfs\Win32Api.cs" />
     <Compile Include="Utils\RandomHelper.cs" />
+    <Compile Include="Utils\Regedit\RegHelper.cs" />
+    <Compile Include="Utils\Regedit\TestRegedit.cs" />
     <Compile Include="Utils\RegexHelper.cs" />
     <Compile Include="Utils\RemoteConnectorHelper.cs" />
     <Compile Include="Utils\ConvertType\RMBHelper.cs" />
@@ -313,7 +314,6 @@
     </EntityDeploy>
     <Compile Include="Utils\Security\ImpersonatorHelper.cs" />
     <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram2.cd" />
     <Content Include="Configs\log4net.config">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
