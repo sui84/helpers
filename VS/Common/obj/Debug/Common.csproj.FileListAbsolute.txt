@@ -169,3 +169,4 @@ E:\MyProjects\Github\byme\helpers\VS\Common\bin\Debug\zxing.pdb
 E:\MyProjects\Github\byme\helpers\VS\Common\bin\Debug\Common.exe.config
 E:\MyProjects\Github\byme\helpers\VS\Common\obj\Debug\Common.exe
 E:\MyProjects\Github\byme\helpers\VS\Common\bin\Debug\Common.exe
+E:\MyProjects\Github\byme\helpers\VS\Common\obj\Debug\Common.csprojResolveAssemblyReference.cache

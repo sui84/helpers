@@ -58,8 +58,23 @@ namespace Common.Tests
 
     public class TestXmlHelper
     {
+        static void Main(string[] args)
+        {
+
+            var validator = new XsdValidator();
+            validator.AddSchema(@"D:\TEMP\files\admin.xsd");
+            validator.AddSchema(@"D:\TEMP\files\employees.xsd");
+            var isValid = validator.IsValid(@"D:\TEMP\files\employees.xml");
+
+            return;
+        }
+
          public TestXmlHelper()
         {
+
+            
+
+
             XmlObject xmlObj = new XmlObject();
             string testXmlStr = XmlHelper.ObjToXmlStr(xmlObj);
 

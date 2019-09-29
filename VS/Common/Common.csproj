@@ -31,7 +31,7 @@
     <RootNamespace>Common</RootNamespace>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Common.Utils.Regedit.TestRegedit</StartupObject>
+    <StartupObject>Common.Tests.TestXmlHelper</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ClosedXML">
@@ -226,6 +226,8 @@
     <Compile Include="Tests\TestLinq.cs" />
     <Compile Include="Tests\TestThreads.cs" />
     <Compile Include="Utils\ADHelper.cs" />
+    <Compile Include="Utils\Files\XsdValidator.cs" />
+    <Compile Include="Utils\Google\BigQueryHelper.cs" />
     <Compile Include="Utils\Log\AppLogger.cs" />
     <Compile Include="Utils\CacheHelper.cs" />
     <Compile Include="Utils\CmdHelper.cs" />
